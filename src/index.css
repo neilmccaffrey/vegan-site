@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+
+/* Light Mode */
+body {
+  @apply bg-green-50 text-green-900;
+}
+.primary {
+  @apply bg-green-600 text-white;
+}
+header {
+  @apply bg-green-300 text-white shadow-md;
+}
+
+/* Dark Mode */
+.dark body {
+  @apply bg-gray-800 text-green-400;
+}
+.dark .primary {
+  @apply bg-green-400 text-gray-900;
+}
+.dark header {
+  @apply bg-gray-900 text-green-400 shadow-lg border-b border-gray-700;
+}
