@@ -5,6 +5,7 @@ const RestaurantsList = () => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
+  const [nextPageToken, setNextPageToken] = useState(null);
 
   useEffect(() => {
     // Get current location using geolocation API
@@ -19,21 +20,24 @@ const RestaurantsList = () => {
     );
   }, []);
 
-  useEffect(() => {
-    const fetchRestaurants = async () => {
-      try {
-        const response = await axios.get(
-          'http://localhost:5001/api/restaurants',
-          {
-            params: { latitude, longitude },
-          }
-        );
-        setRestaurants(response.data);
-      } catch (error) {
-        console.error('Error fetching restaurants:', error);
-      }
-    };
+  const fetchRestaurants = async (token = null) => {
+    try {
+      const params = { latitude, longitude, nextPageToken: token || '' };
+      const response = await axios.get(
+        'http://localhost:5001/api/restaurants',
+        { params }
+      );
+      setRestaurants((prevRestaurants) => [
+        ...prevRestaurants,
+        ...response.data.restaurants,
+      ]);
+      setNextPageToken(response.data.nextPageToken);
+    } catch (error) {
+      console.error('Error fetching restaurants:', error);
+    }
+  };
 
+  useEffect(() => {
     if (latitude && longitude) {
       fetchRestaurants();
     }
@@ -45,11 +49,17 @@ const RestaurantsList = () => {
       <ul>
         {restaurants.map((restaurant) => (
           <li key={restaurant.place_id}>
-            {restaurant.name}
-            {restaurant.rating}
+            {restaurant.name} {restaurant.rating} {restaurant.price_level}{' '}
+            {restaurant.vicinity} {restaurant.website}{' '}
+            {restaurant.formatted_phone_number}{' '}
           </li>
         ))}
       </ul>
+      {nextPageToken && (
+        <button onClick={() => fetchRestaurants(nextPageToken)}>
+          Show More
+        </button>
+      )}
     </div>
   );
 };
