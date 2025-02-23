@@ -58,7 +58,7 @@ const RestaurantsList = () => {
   }, [latitude, longitude]);
 
   return (
-    <div>
+    <>
       <ul>
         {restaurants.map((restaurant) => (
           <li key={restaurant.place_id}>
@@ -78,7 +78,7 @@ const RestaurantsList = () => {
                   className="w-20 md:w-32 aspect-video object-cover rounded mx-2"
                 />
               )}
-              <div className="flex flex-col border-b w-96 self-end text-xs md:textsm pb-2">
+              <div className="flex flex-col border-b w-96 self-end text-xs md:text-sm pb-2">
                 <div className="flex gap-x-5">
                   <span>{restaurant.name}</span>
                   <span className="flex items-center justify-center">
@@ -133,7 +133,7 @@ const RestaurantsList = () => {
         ))}
       </ul>
       {/* width 128 to account for photo (32) + info (96) */}
-      <div className="w-128 flex justify-end underline">
+      <div className="w-72 md:w-128 flex justify-end underline">
         {nextPageToken && (
           <button
             className="cursor-pointer"
@@ -144,7 +144,7 @@ const RestaurantsList = () => {
           </button>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

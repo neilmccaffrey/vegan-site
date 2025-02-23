@@ -35,7 +35,7 @@ const ThemeToggle = () => {
   return (
     //theme toggle
     <div className="flex items-center space-x-2">
-      <FontAwesomeIcon icon={faSun} className=" text-primary text-xl" />
+      <FontAwesomeIcon icon={faSun} className="text-primary text-xl" />
       <label htmlFor="theme-toggle" className="relative">
         <input
           id="theme-toggle"
