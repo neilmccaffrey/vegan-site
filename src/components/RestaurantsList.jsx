@@ -2,13 +2,21 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import veganPic from '/public/vegan-friendly-leaves-label-green-color_1017-25452.png';
 
 const RestaurantsList = () => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
   const [nextPageToken, setNextPageToken] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // used to prevent show more button from calling the same fetch multiple times on click
+  const handleFetch = async () => {
+    if (loading) return;
+    setLoading(true);
+    await fetchRestaurants(nextPageToken);
+    setLoading(false);
+  };
 
   useEffect(() => {
     // Get current location using geolocation API
@@ -64,7 +72,9 @@ const RestaurantsList = () => {
                 />
               ) : (
                 <img
-                  src={veganPic}
+                  src={
+                    '/src/assets/images/vegan-friendly-leaves-label-green-color_1017-25452.png'
+                  }
                   className="w-20 md:w-32 aspect-video object-cover rounded mx-2"
                 />
               )}
@@ -127,9 +137,10 @@ const RestaurantsList = () => {
         {nextPageToken && (
           <button
             className="cursor-pointer"
-            onClick={() => fetchRestaurants(nextPageToken)}
+            onClick={handleFetch}
+            disabled={loading} //disable button while fetching
           >
-            Show More
+            {loading ? 'Loading...' : 'Show More'}
           </button>
         )}
       </div>
