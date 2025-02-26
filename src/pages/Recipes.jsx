@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import RecipeModal from '../components/RecipeModal';
+import RecipeForm from '../components/RecipeForm';
 
 const Recipes = () => {
   const [allRecipes, setAllRecipes] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [category, setCategory] = useState('');
   const [selectedRecipe, setSelectedRecipe] = useState(null); // selected recipe to show details
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     axios
@@ -35,39 +37,56 @@ const Recipes = () => {
     document.body.style.overflow = 'auto'; // Re-enable scroll when modal is closed
   };
 
-  return (
-    <div className="flex flex-col md:flex-row mt-20 ml-5">
-      <div>
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="primary rounded p-2 shadow-md cursor-pointer"
-        >
-          <option value="">Select Category</option>
-          <option value="All">All</option>
-          <option value="Mexican">Mexican</option>
-          <option value="Italian">Italian</option>
-          <option value="American">American</option>
-          {/* Add more categories here */}
-        </select>
-        <ul>
-          {recipes.map((recipe) => (
-            <li
-              key={recipe.id}
-              onClick={() => handleRecipeClick(recipe)}
-              className="cursor-pointer underline hover:"
-            >
-              {recipe.name}
-            </li>
-          ))}
-        </ul>
-      </div>
+  const handleClick = () => {
+    //show recipe form
+    setShowForm(!showForm);
+  };
 
-      {/* Conditionally render recipe details if one is selected */}
-      {selectedRecipe && (
-        <RecipeModal recipe={selectedRecipe} onClose={handleCloseModal} />
-      )}
-    </div>
+  return (
+    <>
+      <div className="mt-20 ml-5">
+        <span>
+          To submit a recipe click{' '}
+          <a onClick={handleClick} className="cursor-pointer underline">
+            here!
+          </a>
+          {/* pass showForm state to close on submit */}
+          {showForm && <RecipeForm setShowForm={setShowForm} />}
+        </span>
+      </div>
+      <div className="flex flex-col md:flex-row mt-5 ml-5">
+        <div>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="primary rounded p-2 shadow-md cursor-pointer"
+          >
+            <option value="">Select Category</option>
+            <option value="All">All</option>
+            <option value="Mexican">Mexican</option>
+            <option value="Italian">Italian</option>
+            <option value="American">American</option>
+            {/* Add more categories here */}
+          </select>
+          <ul>
+            {recipes.map((recipe) => (
+              <li
+                key={recipe.id}
+                onClick={() => handleRecipeClick(recipe)}
+                className="cursor-pointer underline hover:"
+              >
+                {recipe.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Conditionally render recipe details if one is selected */}
+        {selectedRecipe && (
+          <RecipeModal recipe={selectedRecipe} onClose={handleCloseModal} />
+        )}
+      </div>
+    </>
   );
 };
 
