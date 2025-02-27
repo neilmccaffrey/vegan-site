@@ -20,9 +20,13 @@ const Recipes = () => {
   // show recipes based on category
   useEffect(() => {
     if (category === 'All') {
-      setRecipes(allRecipes);
+      setRecipes([...allRecipes].sort((a, b) => a.name.localeCompare(b.name)));
     } else {
-      setRecipes(allRecipes.filter((recipe) => recipe.category === category));
+      setRecipes(
+        allRecipes
+          .filter((recipe) => recipe.category === category)
+          .sort((a, b) => a.name.localeCompare(b.name))
+      );
     }
   }, [category]);
 
