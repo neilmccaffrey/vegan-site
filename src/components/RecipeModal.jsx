@@ -2,9 +2,21 @@ import PropTypes from 'prop-types';
 
 const RecipeModal = ({ recipe, onClose }) => {
   const { name, servings, ingredients, instructions } = recipe;
+
+  // close modal on click outside of modal
+  const handleBackgroundClick = (e) => {
+    if (e.target.id === 'modal-background') {
+      onClose();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50 mt-20">
-      <div className="p-4 border rounded shadow-lg bg-white modal md:ml-40 mb-20 relative max-h-[80vh] md:max-h-[95vh] overflow-y-auto">
+    <div
+      id="modal-background"
+      onClick={handleBackgroundClick}
+      className="fixed inset-0 flex bg-opacity-30 backdrop-blur-xs justify-center items-center z-50 "
+    >
+      <div className="p-4 border rounded shadow-lg bg-white modal md:ml-40 mb-20 relative max-h-[80vh] md:max-h-[95vh] mt-20 overflow-y-auto">
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-xl text-gray-600"
