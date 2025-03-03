@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import { CognitoUser, CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import { userPool } from '../cognito';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -9,6 +10,8 @@ const Signup = () => {
   const [error, setError] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [verifying, setVerifying] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,6 +40,24 @@ const Signup = () => {
     setVerifying(true);
   };
 
+  const handleVerification = (e) => {
+    e.preventDefault();
+
+    const user = new CognitoUser({
+      Username: username, // Use username from context
+      Pool: userPool,
+    });
+
+    user.confirmRegistration(verificationCode, true, (err) => {
+      if (err) {
+        setError(err.message || JSON.stringify(err));
+        return;
+      }
+      // Navigate to login page upon successful verification
+      navigate('/login');
+    });
+  };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="p-8 md:p-16 border shadow-lg rounded flex flex-col items-center">
@@ -60,7 +81,6 @@ const Signup = () => {
               <input
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                autoComplete="username"
                 placeholder="Username"
                 className="p-3 w-64 md:w-96 rounded shadow-lg mb-2"
               />
@@ -75,27 +95,36 @@ const Signup = () => {
               {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
               <button
                 type="submit"
-                className="rounded p-2 primary w-40 cursor-pointer hover:opacity-50"
+                className="rounded p-2 primary w-40 cursor-pointer hover:opacity-50 shadow-lg"
               >
                 Signup
               </button>
             </form>
           </>
         ) : (
-          <form>
-            <input
-              value={verificationCode}
-              onChange={(e) => setVerificationCode(e.target.value)}
-              placeholder="Verification Code"
-              className="p-3 w-64 md:w-96 rounded shadow-lg mb-2"
-            />
-            <button
-              type="submit"
-              className="rounded p-2 primary w-40 cursor-pointer hover:opacity-50"
+          <>
+            <span className="text-2xl font-bold mb-4">Verify Email</span>
+            <span className="text-xs">
+              Enter the verification code sent to your email address
+            </span>
+            <form
+              onSubmit={handleVerification}
+              className="w-full flex flex-col items-center"
             >
-              Verify
-            </button>
-          </form>
+              <input
+                value={verificationCode}
+                onChange={(e) => setVerificationCode(e.target.value)}
+                placeholder="Verification Code"
+                className="p-3 w-64 md:w-96 rounded shadow-lg mb-2"
+              />
+              <button
+                type="submit"
+                className="rounded p-2 primary w-40 cursor-pointer hover:opacity-50 shadow-lg"
+              >
+                Verify
+              </button>
+            </form>
+          </>
         )}
       </div>
     </div>
