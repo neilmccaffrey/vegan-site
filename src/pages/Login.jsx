@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [password, setPassword] = useState('');
@@ -19,8 +20,7 @@ const Login = () => {
           <input
             value={login}
             onChange={(e) => setLogin(e.target.value)}
-            autoComplete="email"
-            placeholder="Email"
+            placeholder="Username/Email"
             className="p-3 w-64 md:w-96 rounded shadow-lg mb-2"
           />
           <input
@@ -37,6 +37,12 @@ const Login = () => {
           >
             Login
           </button>
+          <Link
+            to="/signup"
+            className="text-xs text-blue-500 mt-5 cursor-pointer underline"
+          >
+            {`Don't have an account yet? Click here to signup!`}
+          </Link>
         </form>
       </div>
     </div>

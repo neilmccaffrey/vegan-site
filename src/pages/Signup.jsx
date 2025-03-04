@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CognitoUser, CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import { userPool } from '../cognito';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -65,7 +65,7 @@ const Signup = () => {
           <>
             <span className="text-2xl font-bold mb-4">Register</span>
             <span className="text-xs">
-              Email is ONLY used for password recovery. I collect NO data
+              Email is ONLY used for password recovery/login.
             </span>
             <form
               onSubmit={handleSubmit}
@@ -99,6 +99,12 @@ const Signup = () => {
               >
                 Signup
               </button>
+              <Link
+                to="/login"
+                className="text-xs text-blue-500 mt-5 cursor-pointer underline"
+              >
+                {`Already have an account? Click here to login!`}
+              </Link>
             </form>
           </>
         ) : (
