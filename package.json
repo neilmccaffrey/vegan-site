@@ -16,6 +16,7 @@
     "amazon-cognito-identity-js": "^6.3.12",
     "axios": "^1.7.9",
     "buffer": "^6.0.3",
+    "jwt-decode": "^4.0.0",
     "process": "^0.11.10",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

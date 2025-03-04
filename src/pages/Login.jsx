@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
+import { userPool } from '../cognito';
+import { jwtDecode } from 'jwt-decode';
 
 const Login = () => {
   const [password, setPassword] = useState('');
@@ -7,6 +10,31 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const authDetails = new AuthenticationDetails({
+      Username: login,
+      Password: password,
+    });
+
+    const user = new CognitoUser({
+      Username: login,
+      Pool: userPool,
+    });
+
+    user.authenticateUser(authDetails, {
+      onSuccess: (session) => {
+        const idToken = session.getIdToken().getJwtToken(); // ID Token
+        const decoded = jwtDecode(idToken);
+
+        console.log('User ID (sub):', decoded.sub);
+        console.log('Username:', decoded['cognito:username']);
+
+        // Store token/username in context
+      },
+      onFailure: (err) => {
+        console.error('Login failed:', err.message);
+      },
+    });
   };
 
   return (

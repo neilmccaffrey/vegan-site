@@ -29,15 +29,14 @@ const Signup = () => {
     ];
 
     // Sign-up with Cognito User Pool
-    userPool.signUp(username, password, attributeList, null, (err, data) => {
+    userPool.signUp(username, password, attributeList, null, (err) => {
       if (err) {
         setError(err.message || JSON.stringify(err));
+        return;
       } else {
-        console.log('Successfully signed up!', data);
+        setVerifying(true);
       }
     });
-
-    setVerifying(true);
   };
 
   const handleVerification = (e) => {
