@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import { userPool } from '../cognito';
-import { jwtDecode } from 'jwt-decode';
+import { UserContext } from '../context/UserContext';
 
 const Login = () => {
   const [password, setPassword] = useState('');
   const [login, setLogin] = useState('');
+  const { setUserFromToken } = useContext(UserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,13 +24,10 @@ const Login = () => {
 
     user.authenticateUser(authDetails, {
       onSuccess: (session) => {
-        const idToken = session.getIdToken().getJwtToken(); // ID Token
-        const decoded = jwtDecode(idToken);
-
-        console.log('User ID (sub):', decoded.sub);
-        console.log('Username:', decoded['cognito:username']);
-
-        // Store token/username in context
+        const idToken = session.getIdToken().getJwtToken(); // Get the ID token
+        setUserFromToken(idToken); // Store the user data in context
+        const refreshToken = session.getRefreshToken().getToken(); // Get the refresh token
+        localStorage.setItem('refresh_token', refreshToken); // Save in localStorage
       },
       onFailure: (err) => {
         console.error('Login failed:', err.message);
