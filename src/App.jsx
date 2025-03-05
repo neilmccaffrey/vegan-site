@@ -8,8 +8,8 @@ import { UserProvider } from './context/UserContext';
 
 function App() {
   return (
-    <UserProvider>
-      <Router>
+    <Router>
+      <UserProvider>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -18,8 +18,8 @@ function App() {
             <Route path="login" element={<Login />} />
           </Route>
         </Routes>
-      </Router>
-    </UserProvider>
+      </UserProvider>
+    </Router>
   );
 }
 

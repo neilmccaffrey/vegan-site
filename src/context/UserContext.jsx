@@ -1,8 +1,9 @@
 import { createContext, useState, useEffect } from 'react';
-import { CognitoUser } from 'amazon-cognito-identity-js';
+import { CognitoUser, CognitoRefreshToken } from 'amazon-cognito-identity-js';
 import { userPool } from '../cognito';
 import { jwtDecode } from 'jwt-decode';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 const UserContext = createContext();
 
@@ -13,6 +14,7 @@ const UserProvider = ({ children }) => {
     localStorage.getItem('refresh_token')
   );
 
+  const navigate = useNavigate();
   // Function to set the user from the decoded token
   const setUserFromToken = (idToken) => {
     const decodedToken = jwtDecode(idToken);
@@ -23,67 +25,67 @@ const UserProvider = ({ children }) => {
     setIsAuthenticated(true);
   };
 
-  // Refresh session and refresh token
+  useEffect(() => {
+    if (refreshToken) {
+      const interval = setInterval(
+        () => {
+          refreshSession(); // Refresh session periodically
+        },
+        55 * 60 * 1000 // Refresh every 55 minutes
+      );
+
+      return () => clearInterval(interval); // Cleanup on unmount
+    }
+  }, [refreshToken, isAuthenticated]);
+
   const refreshSession = () => {
-    const storedRefreshToken = localStorage.getItem('refresh_token');
-    if (!storedRefreshToken) {
-      console.error('No refresh token available');
+    if (!isAuthenticated || !refreshToken || !user.username) {
+      // If the user is not authenticated or doesn't have a refresh token or username, do nothing
       return;
     }
 
+    // get a new session so user can continue to be active
     const cognitoUser = new CognitoUser({
       Username: user.username,
       Pool: userPool,
     });
 
-    cognitoUser.refreshSession(storedRefreshToken, (err, session) => {
+    const refreshTokenObj = new CognitoRefreshToken({
+      RefreshToken: refreshToken,
+    });
+
+    // call refresh session from cognito with refresh token, if it is expired log user out
+    cognitoUser.refreshSession(refreshTokenObj, (err, session) => {
       if (err) {
         console.error('Error refreshing session:', err);
+        if (err.message.includes('expired')) {
+          logout(); // Handle expired refresh token
+        }
         return;
       }
 
-      const newRefreshToken = session.getRefreshToken().getToken(); // Get the new refresh token
+      const newRefreshToken = session.getRefreshToken().getToken(); // Should remain the same unless token is expired
 
-      // Update user context with new token
       setUser({
         username: session.getIdToken().payload['cognito:username'],
         sub: session.getIdToken().payload.sub,
       });
-      setIsAuthenticated(true);
 
-      // Store the new token in localStorage
-      localStorage.setItem('refresh_token', newRefreshToken);
-      setRefreshToken(newRefreshToken); // Update state with new refresh token
+      // No need to update localStorage for the refresh token unless Cognito issues a new one
+      if (newRefreshToken !== refreshToken) {
+        localStorage.setItem('refresh_token', newRefreshToken);
+        setRefreshToken(newRefreshToken);
+      }
     });
   };
-
-  useEffect(() => {
-    const storedRefreshToken = localStorage.getItem('refresh_token');
-    if (storedRefreshToken) {
-      const tokenExpiration = jwtDecode(storedRefreshToken).exp * 1000; // Expiration time in milliseconds
-      const currentTime = Date.now();
-
-      const timeUntilExpiration = tokenExpiration - currentTime + 1000; // Add 1 second to trigger refresh immediately after expiration
-
-      if (timeUntilExpiration > 0) {
-        const timeout = setTimeout(() => {
-          refreshSession(); // Refresh session just after the token expires
-        }, timeUntilExpiration);
-
-        // Cleanup timeout on unmount
-        return () => clearTimeout(timeout);
-      } else {
-        // If the refresh token is already expired, immediately refresh
-        refreshSession();
-      }
-    }
-  }, [refreshToken]); // Re-run if refreshToken state changes
 
   // Log the user out
   const logout = () => {
     setUser({ username: null, sub: null });
     setIsAuthenticated(false);
     localStorage.removeItem('refresh_token');
+    // Redirect to login
+    navigate('/login', { state: { expiredSession: true } }); // Pass a flag indicating session is expired
   };
 
   return (

@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import { userPool } from '../cognito';
 import { UserContext } from '../context/UserContext';
+import { useLocation } from 'react-router-dom';
 
 const Login = () => {
   const [password, setPassword] = useState('');
   const [login, setLogin] = useState('');
   const { setUserFromToken } = useContext(UserContext);
+  const location = useLocation();
+  const expiredSession = location.state?.expiredSession;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,6 +42,9 @@ const Login = () => {
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="p-8 md:p-16 border shadow-lg rounded flex flex-col items-center">
         <span className="text-2xl font-bold mb-4">Login</span>
+        {expiredSession && (
+          <p className="mt-2">Session has expired, please log in again.</p>
+        )}
         <form
           onSubmit={handleSubmit}
           className="w-full flex flex-col items-center"
