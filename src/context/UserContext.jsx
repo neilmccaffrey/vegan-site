@@ -34,6 +34,9 @@ const UserProvider = ({ children }) => {
         55 * 60 * 1000 // Refresh every 55 minutes
       );
 
+      // Check for expiration immediately when the app loads
+      refreshSession();
+
       return () => clearInterval(interval); // Cleanup on unmount
     }
   }, [refreshToken, isAuthenticated]);
