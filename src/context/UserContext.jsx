@@ -25,6 +25,25 @@ const UserProvider = ({ children }) => {
     setIsAuthenticated(true);
   };
 
+  // on page refresh/open check for active session
+  useEffect(() => {
+    const currentUser = userPool.getCurrentUser();
+
+    if (currentUser) {
+      currentUser.getSession((err, session) => {
+        if (err || !session.isValid()) {
+          console.error('Session invalid or error:', err);
+          logout();
+          return;
+        }
+
+        // set user and isAuthenticated
+        setIsAuthenticated(true);
+        setUserFromToken(session.getIdToken().getJwtToken());
+      });
+    }
+  }, []);
+
   useEffect(() => {
     if (refreshToken) {
       const interval = setInterval(
