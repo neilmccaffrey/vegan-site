@@ -103,6 +103,10 @@ const UserProvider = ({ children }) => {
 
   // Log the user out
   const logout = () => {
+    const user = userPool.getCurrentUser(); // Get the current Cognito user
+    if (user) {
+      user.signOut(); // Clear the session
+    }
     setUser({ username: null, sub: null });
     setIsAuthenticated(false);
     localStorage.removeItem('refresh_token');
@@ -111,6 +115,10 @@ const UserProvider = ({ children }) => {
   };
 
   const manualLogout = () => {
+    const user = userPool.getCurrentUser(); // Get the current Cognito user
+    if (user) {
+      user.signOut(); // Clear the session
+    }
     setUser({ username: null, sub: null });
     setIsAuthenticated(false);
     localStorage.removeItem('refresh_token');
