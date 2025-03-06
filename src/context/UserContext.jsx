@@ -110,9 +110,15 @@ const UserProvider = ({ children }) => {
     navigate('/login', { state: { expiredSession: true } }); // Pass a flag indicating session is expired
   };
 
+  const manualLogout = () => {
+    setUser({ username: null, sub: null });
+    setIsAuthenticated(false);
+    localStorage.removeItem('refresh_token');
+  };
+
   return (
     <UserContext.Provider
-      value={{ user, isAuthenticated, setUserFromToken, logout }}
+      value={{ user, isAuthenticated, setUserFromToken, logout, manualLogout }}
     >
       {children}
     </UserContext.Provider>

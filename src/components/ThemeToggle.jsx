@@ -46,9 +46,7 @@ const ThemeToggle = () => {
         />
         <div className="block w-11 h-6 primary rounded-full"></div>
         <div
-          className={`absolute left-1 top-1 w-4 h-4 bg-white border-2 border-gray-300 rounded-full transition-transform transform ${
-            theme === 'dark' ? 'translate-x-5' : ''
-          }`}
+          className={`absolute left-1 top-1 w-4 h-4 bg-white border-2 border-gray-300 rounded-full transition-transform transform moveButton translate-x-0`}
         ></div>
         {/* accessibility */}
         <span className="sr-only">Toggle theme</span>

@@ -25,3 +25,7 @@ header {
 .dark .modal {
   @apply bg-gray-300 text-black;
 }
+
+.dark .moveButton {
+  @apply translate-x-5;
+}
