@@ -5,6 +5,7 @@ import Layout from './components/Layout';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import { UserProvider } from './context/UserContext';
+import Forums from './pages/Forums';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="recipes" element={<Recipes />} />
             <Route path="signup" element={<Signup />} />
             <Route path="login" element={<Login />} />
+            <Route path="forums" element={<Forums />} />
           </Route>
         </Routes>
       </UserProvider>

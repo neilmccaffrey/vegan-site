@@ -31,6 +31,9 @@ const Header = () => {
           <Link to="/recipes" className="hover:scale-125">
             Recipes
           </Link>
+          <Link to="/forums" className="hover:scale-125">
+            Forums
+          </Link>
           {!isAuthenticated ? (
             <Link to="/login" className="hover:scale-125">
               Login
