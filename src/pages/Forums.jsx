@@ -24,16 +24,27 @@ const Forums = () => {
   }
 
   return (
-    <div className="mt-20">
-      <h1 className="mt-20">Forums</h1>
-      <ul>
-        {topics.map((topic, index) => (
-          <li key={index}>
-            {topic.name} - {topic.postCount} posts
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <h1 className="flex mt-20 items-center justify-center">Forums</h1>
+      <div className="flex flex-col mt-5 items-center border rounded shadow-lg max-w-150 mx-auto justify-center">
+        <div className="flex w-full border-b justify-between">
+          <span className="flex-1 py-2 ml-5">Topics</span>
+          <span className="border-l border-gray-300 px-2 py-2 flex w-16">
+            Posts
+          </span>
+        </div>
+        <ul className="w-full">
+          {topics.map((topic, index) => (
+            <li key={index} className="flex w-full border-b last:border-b-0">
+              <span className="flex-1 py-2 ml-5">{topic.name}</span>
+              <span className="border-l border-gray-300 px-4 py-2 flex items-center w-16 text-center">
+                {topic.postCount}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 };
 
