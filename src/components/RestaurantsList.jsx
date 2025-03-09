@@ -60,7 +60,7 @@ const RestaurantsList = () => {
   return (
     <>
       <ul>
-        {restaurants.map((restaurant) => (
+        {restaurants?.map((restaurant) => (
           <li key={restaurant.place_id}>
             <div className="flex mt-2">
               {/* if photo exists */}
@@ -91,7 +91,7 @@ const RestaurantsList = () => {
                   </span>
                 </div>
                 <div className="flex gap-x-5">
-                  {restaurant.opening_hours.open_now ? (
+                  {restaurant.opening_hours?.open_now ? (
                     <span className="text-green-300">Open</span>
                   ) : (
                     <span className="text-red-300">Closed</span>
