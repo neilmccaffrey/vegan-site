@@ -41,7 +41,7 @@ const Forums = () => {
                 to={`/forums/${topic.name.toLowerCase()}`}
                 className="flex-1 py-2 ml-5 underline text-blue-500"
               >
-                {topic.name}
+                {topic.name.charAt(0).toUpperCase() + topic.name.slice(1)}
               </Link>
               <span className="border-l border-gray-300 px-4 py-2 flex items-center w-16 text-center">
                 {topic.postCount}
