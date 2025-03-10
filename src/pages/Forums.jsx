@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getVeganForums } from '../api/forums';
+import { Link } from 'react-router-dom';
 
 const Forums = () => {
   const [topics, setTopics] = useState([]);
@@ -36,7 +37,12 @@ const Forums = () => {
         <ul className="w-full">
           {topics.map((topic, index) => (
             <li key={index} className="flex w-full border-b last:border-b-0">
-              <span className="flex-1 py-2 ml-5">{topic.name}</span>
+              <Link
+                to={`/forums/${topic.name.toLowerCase()}`}
+                className="flex-1 py-2 ml-5 underline text-blue-500"
+              >
+                {topic.name}
+              </Link>
               <span className="border-l border-gray-300 px-4 py-2 flex items-center w-16 text-center">
                 {topic.postCount}
               </span>
