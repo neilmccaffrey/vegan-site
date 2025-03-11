@@ -21,3 +21,20 @@ export const fetchPosts = async (topic) => {
     throw error;
   }
 };
+
+export const addPost = async (topic, postData) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/api/forums/${topic}`,
+      postData
+    );
+    if (response.status === 201) {
+      return true; // if successful
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error('Error adding post: ', error);
+    throw error;
+  }
+};

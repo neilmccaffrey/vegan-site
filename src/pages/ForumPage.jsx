@@ -4,12 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '../context/UserContext';
+import { addPost } from '../api/forums';
 
 const ForumPage = () => {
-  const [showTextArea, setShowTextArea] = useState(true);
+  const [showTextArea, setShowTextArea] = useState(false);
   const [newPost, setNewPost] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false);
   const { topic } = useParams();
-  const { isAuthenticated } = useContext(UserContext);
+  const { user, isAuthenticated } = useContext(UserContext);
   const textAreaRef = useRef(null);
 
   // focus cursor in textarea when user clicks new post
@@ -31,6 +33,26 @@ const ForumPage = () => {
   const handleCancel = () => {
     setShowTextArea(false);
     setNewPost('');
+  };
+
+  const handleSubmitPost = async () => {
+    const postData = {
+      username: user.username,
+      sub: user.sub,
+      post: newPost,
+    };
+    setIsDisabled(true);
+    try {
+      const success = await addPost(topic, postData);
+      if (success) {
+        setShowTextArea(false);
+        setNewPost('');
+        alert('Post added successfully!');
+        setIsDisabled(false);
+      }
+    } catch (error) {
+      alert('Error submitting post: ', error);
+    }
   };
 
   return (
@@ -55,11 +77,17 @@ const ForumPage = () => {
             <div className="mb-5 mt-2">
               <button
                 onClick={handleCancel}
-                className="bg-gray-200 rounded p-1"
+                className="bg-gray-200 rounded p-1 cursor-pointer"
               >
                 Cancel
               </button>
-              <button className="primary rounded p-1 w-15 mx-2">Post</button>
+              <button
+                disabled={isDisabled}
+                onClick={handleSubmitPost}
+                className={`primary rounded p-1 w-15 mx-2 cursor-pointer ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                Post
+              </button>
             </div>
           </div>
         )}
