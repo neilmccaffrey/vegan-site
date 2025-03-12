@@ -36,6 +36,10 @@ const ForumPage = () => {
   };
 
   const handleSubmitPost = async () => {
+    if (!newPost.trim()) {
+      alert('Post must contain text');
+      return;
+    }
     const postData = {
       username: user.username,
       sub: user.sub,
@@ -51,7 +55,9 @@ const ForumPage = () => {
         setIsDisabled(false);
       }
     } catch (error) {
-      alert('Error submitting post: ', error);
+      alert('Error submitting post: ' + error.message);
+    } finally {
+      setIsDisabled(false);
     }
   };
 

@@ -34,7 +34,18 @@ export const addPost = async (topic, postData) => {
       return false;
     }
   } catch (error) {
-    console.error('Error adding post: ', error);
-    throw error;
+    if (error.response) {
+      throw new Error(
+        error.response.data.message || 'An unknown error occurred.'
+      );
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error('Error request:', error.request);
+      throw new Error('No response received from the server.');
+    } else {
+      // Something else triggered the error
+      console.error('Error:', error.message);
+      throw new Error('Error with the request.');
+    }
   }
 };
