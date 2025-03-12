@@ -5,6 +5,7 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import { addPost } from '../api/forums';
+import { fetchPosts } from '../api/forums';
 
 const ForumPage = () => {
   const [showTextArea, setShowTextArea] = useState(false);
@@ -13,6 +14,15 @@ const ForumPage = () => {
   const { topic } = useParams();
   const { user, isAuthenticated } = useContext(UserContext);
   const textAreaRef = useRef(null);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const getPosts = async () => {
+      const data = await fetchPosts(topic);
+      setPosts(data);
+    };
+    getPosts();
+  }, [topic]);
 
   // focus cursor in textarea when user clicks new post
   useEffect(() => {
@@ -49,6 +59,10 @@ const ForumPage = () => {
     try {
       const success = await addPost(topic, postData);
       if (success) {
+        setPosts((prevPosts) => [
+          ...prevPosts,
+          { username: user.username, post: newPost, createdAt: new Date() },
+        ]); // Add the new post to the state
         setShowTextArea(false);
         setNewPost('');
         alert('Post added successfully!');
@@ -97,7 +111,7 @@ const ForumPage = () => {
             </div>
           </div>
         )}
-        <PostList topic={topic} />
+        <PostList posts={posts} />
       </div>
     </div>
   );
