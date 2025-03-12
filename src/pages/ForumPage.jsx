@@ -6,6 +6,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import { addPost } from '../api/forums';
 import { fetchPosts } from '../api/forums';
+import { userLike } from '../api/forums';
 
 const ForumPage = () => {
   const [showTextArea, setShowTextArea] = useState(false);
@@ -75,6 +76,25 @@ const ForumPage = () => {
     }
   };
 
+  const handleLike = async (postId) => {
+    // send users sub and postId to likedBy
+    await userLike(topic, user.sub, postId);
+    // Optimistically handle user like
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post._id === postId
+          ? {
+              ...post,
+              likedBy:
+                Array.isArray(post.likedBy) && post.likedBy.includes(user.sub)
+                  ? post.likedBy.filter((sub) => sub !== user.sub) // Unlike
+                  : [...(post.likedBy || []), user.sub], // Like
+            }
+          : post
+      )
+    );
+  };
+
   return (
     <div className="flex flex-col mt-20 items-center">
       <h1>{topic.charAt(0).toUpperCase() + topic.slice(1)} Forum</h1>
@@ -111,7 +131,7 @@ const ForumPage = () => {
             </div>
           </div>
         )}
-        <PostList posts={posts} />
+        <PostList posts={posts} onLike={handleLike} />
       </div>
     </div>
   );

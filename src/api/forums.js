@@ -49,3 +49,13 @@ export const addPost = async (topic, postData) => {
     }
   }
 };
+
+export const userLike = async (topic, userSub, postId) => {
+  try {
+    await axios.put(`${API_URL}/api/forums/${topic}/${postId}/like`, {
+      sub: userSub,
+    });
+  } catch (error) {
+    console.error('Error liking post:', error);
+  }
+};
