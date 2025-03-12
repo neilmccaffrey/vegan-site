@@ -34,7 +34,10 @@ const RecipeForm = ({ setShowForm }) => {
       await axios.post('http://localhost:5001/submit-recipe', formData);
       alert('Recipe Submitted!');
     } catch (error) {
-      console.error('Error submitting recipe:', error);
+      if (error.response) {
+        // show the error message from the response
+        alert('Error submitting recipe: ' + error.response.data.message);
+      }
     }
     //if form is valid
     setError('');
