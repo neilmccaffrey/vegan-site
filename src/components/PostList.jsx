@@ -19,8 +19,9 @@ const PostList = ({ posts, onLike }) => {
               <div className="flex mt-auto border-t border-gray-300 justify-end gap-x-5">
                 <button
                   onClick={() => onLike(post._id)}
-                  className="cursor-pointer"
+                  className="flex cursor-pointer gap-x-1 mt-auto p-1"
                 >
+                  <span className="ml-1 text-xs">{post.likedBy.length}</span>
                   {post.likedBy.includes(user.sub) ? (
                     <FontAwesomeIcon
                       icon={solidHeart}
@@ -29,11 +30,11 @@ const PostList = ({ posts, onLike }) => {
                   ) : (
                     <FontAwesomeIcon icon={faHeart} />
                   )}
-                  <span className="ml-1 text-xs">{post.likedBy.length}</span>
+                  <span className="text-xs">Like</span>
                 </button>
-                <button className="cursor-pointer">
+                <button className="flex cursor-pointer gap-x-1 mt-auto p-1">
                   <FontAwesomeIcon icon={faComment} />
-                  <span className="ml-1 mr-5 text-xs">Comment</span>
+                  <span className="mr-5 text-xs">Comment</span>
                 </button>
               </div>
             </div>
