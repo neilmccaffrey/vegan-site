@@ -77,6 +77,10 @@ const ForumPage = () => {
   };
 
   const handleLike = async (postId) => {
+    if (!isAuthenticated) {
+      alert('You must be logged in to like/comment');
+      return;
+    }
     // send users sub and postId to likedBy
     await userLike(topic, user.sub, postId);
     // Optimistically handle user like

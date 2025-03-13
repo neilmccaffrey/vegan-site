@@ -29,7 +29,7 @@ const PostList = ({ posts, onLike }) => {
                   ) : (
                     <FontAwesomeIcon icon={faHeart} />
                   )}
-                  <span className="ml-1 text-xs">Like</span>
+                  <span className="ml-1 text-xs">{post.likedBy.length}</span>
                 </button>
                 <button className="cursor-pointer">
                   <FontAwesomeIcon icon={faComment} />
