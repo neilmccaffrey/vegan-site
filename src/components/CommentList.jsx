@@ -32,7 +32,7 @@ const CommentList = ({ comments }) => {
             handleInput();
           }}
           placeholder="Add comment..."
-          className="bg-gray-50 md:w-200 text-black rounded p-2 pr-20 md:pr-30 outline-none w-full min-h-25 resize-none overflow-hidden focus:ring-0 focus:border-transparent"
+          className="bg-gray-50 md:w-200 text-black rounded p-2 pb-10 outline-none w-full min-h-25 resize-none overflow-hidden focus:ring-0 focus:border-transparent"
         />
         {comment && (
           <button className="absolute bottom-2 right-2 primary text-white px-1 md:px-3 py-1 rounded-full cursor-pointer">
