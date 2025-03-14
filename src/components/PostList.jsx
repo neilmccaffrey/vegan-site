@@ -7,8 +7,15 @@ import { UserContext } from '../context/UserContext';
 import CommentList from './CommentList';
 
 const PostList = ({ posts, onLike }) => {
-  const [showComments, setShowComments] = useState(false);
+  const [showComments, setShowComments] = useState({});
   const { user } = useContext(UserContext);
+
+  const toggleComments = (postId) => {
+    setShowComments((prevState) => ({
+      ...prevState,
+      [postId]: !prevState[postId], // Toggle the visibility of comments for the clicked post
+    }));
+  };
 
   return (
     <ul>
@@ -17,7 +24,7 @@ const PostList = ({ posts, onLike }) => {
         .map((post) => (
           <li key={post._id}>
             <div
-              className={`flex flex-col px-2 border border-gray-300 rounded shadow-lg bg-gray-50 w-screen md:w-200 text-black min-h-25 ${!showComments && 'mb-2'}`}
+              className={`flex flex-col px-2 border border-gray-300 rounded shadow-lg bg-gray-50 w-screen md:w-200 text-black min-h-25 ${!showComments[post._id] && 'mb-2'}`}
             >
               <p className="px-2">{post.username}:</p>
               <p className="px-2">{post.post}</p>
@@ -26,8 +33,8 @@ const PostList = ({ posts, onLike }) => {
                   onClick={() => onLike(post._id)}
                   className="flex cursor-pointer gap-x-1 mt-auto p-1"
                 >
-                  <span className="ml-1 text-xs">{post.likedBy.length}</span>
-                  {post.likedBy.includes(user.sub) ? (
+                  <span className="ml-1 text-xs">{post.likedBy?.length}</span>
+                  {post.likedBy?.includes(user.sub) ? (
                     <FontAwesomeIcon
                       icon={solidHeart}
                       className="text-red-500"
@@ -38,7 +45,7 @@ const PostList = ({ posts, onLike }) => {
                   <span className="text-xs">Like</span>
                 </button>
                 <button
-                  onClick={() => setShowComments(!showComments)}
+                  onClick={() => toggleComments(post._id)} // Toggle comments for the clicked post
                   className="flex cursor-pointer gap-x-1 mt-auto p-1"
                 >
                   <FontAwesomeIcon icon={faComment} />
@@ -46,7 +53,9 @@ const PostList = ({ posts, onLike }) => {
                 </button>
               </div>
             </div>
-            {showComments && <CommentList comments={post.comments} />}
+            {showComments[post._id] && (
+              <CommentList comments={post.comments} postId={post._id} />
+            )}
           </li>
         ))}
     </ul>

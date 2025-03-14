@@ -29,9 +29,9 @@ export const addPost = async (topic, postData) => {
       postData
     );
     if (response.status === 201) {
-      return true; // if successful
+      return response.data; // Return the full post object from the backend
     } else {
-      return false;
+      return null;
     }
   } catch (error) {
     if (error.response) {
@@ -57,5 +57,21 @@ export const userLike = async (topic, userSub, postId) => {
     });
   } catch (error) {
     console.error('Error liking post:', error);
+  }
+};
+
+export const addComment = async (topic, username, sub, postId, comment) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/api/forums/${topic}/${postId}/comment`,
+      {
+        sub,
+        username,
+        comment,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error adding comment:', error);
   }
 };

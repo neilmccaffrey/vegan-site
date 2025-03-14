@@ -58,12 +58,10 @@ const ForumPage = () => {
     };
     setIsDisabled(true);
     try {
-      const success = await addPost(topic, postData);
-      if (success) {
-        setPosts((prevPosts) => [
-          ...prevPosts,
-          { username: user.username, post: newPost, createdAt: new Date() },
-        ]); // Add the new post to the state
+      const newPostData = await addPost(topic, postData); // full post data returned
+
+      if (newPostData && newPostData._id) {
+        setPosts((prevPosts) => [newPostData, ...prevPosts]); // Add new post from backend
         setShowTextArea(false);
         setNewPost('');
         alert('Post added successfully!');

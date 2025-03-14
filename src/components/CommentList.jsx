@@ -1,8 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
+import { addComment } from '../api/forums';
 
-const CommentList = ({ comments }) => {
+const CommentList = ({ comments, postId }) => {
   const textAreaRef = useRef(null);
-  const [comment, setComment] = useState('');
+  const [newComment, setNewComment] = useState('');
+  const [allComments, setAllComments] = useState(comments);
+  const { topic } = useParams();
+  const { user, isAuthenticated } = useContext(UserContext);
 
   // focus cursor in textarea when user clicks comment
   useEffect(() => {
@@ -20,22 +27,36 @@ const CommentList = ({ comments }) => {
     }
   };
 
+  const handleAddComment = async () => {
+    if (!newComment.trim()) return;
+    await addComment(topic, user.username, user.sub, postId, newComment);
+    setNewComment('');
+  };
+
   return (
     <>
       <div className="relative">
         <textarea
+          disabled={!isAuthenticated}
           ref={textAreaRef}
-          value={comment}
+          value={newComment}
           rows={1}
           onChange={(e) => {
-            setComment(e.target.value);
+            setNewComment(e.target.value);
             handleInput();
           }}
-          placeholder="Add comment..."
-          className="bg-gray-50 md:w-200 text-black rounded p-2 pb-10 outline-none w-full min-h-25 resize-none overflow-hidden focus:ring-0 focus:border-transparent"
+          placeholder={
+            isAuthenticated
+              ? 'Add comment...'
+              : 'You must log in to add comments'
+          }
+          className="bg-gray-50 md:w-200 text-black border-l border-r border-gray-300 border-b rounded p-2 pb-10 outline-none w-full min-h-25 resize-none overflow-hidden focus:ring-0"
         />
-        {comment && (
-          <button className="absolute bottom-2 right-2 primary text-white px-1 md:px-3 py-1 rounded-full cursor-pointer">
+        {newComment && (
+          <button
+            onClick={handleAddComment}
+            className="absolute bottom-2 right-2 primary text-white px-1 md:px-3 py-1 rounded-full cursor-pointer"
+          >
             Comment
           </button>
         )}
@@ -53,6 +74,11 @@ const CommentList = ({ comments }) => {
       </ul> */}
     </>
   );
+};
+
+CommentList.propTypes = {
+  comments: PropTypes.array.isRequired,
+  postId: PropTypes.string.isRequired,
 };
 
 export default CommentList;
