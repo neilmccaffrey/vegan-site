@@ -139,7 +139,7 @@ const UserProvider = ({ children }) => {
 };
 
 UserProvider.propTypes = {
-  children: PropTypes.node.isRequired, // Ensures children are passed as a valid node
+  children: PropTypes.node.isRequired,
 };
 
 export { UserContext, UserProvider };

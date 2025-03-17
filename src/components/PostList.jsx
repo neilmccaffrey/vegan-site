@@ -18,14 +18,22 @@ const PostList = ({ posts, onLike }) => {
   const [showComments, setShowComments] = useState({});
   const { user } = useContext(UserContext);
   const [showMenu, setShowMenu] = useState({});
-  const menuRef = useRef(null);
+  const menuRefs = useRef({}); // Store refs dynamically
+  const setMenuRef = (postId, node) => {
+    if (node) menuRefs.current[postId] = node;
+  };
+  const [editingPostId, setEditingPostId] = useState(null);
+  const [editedContent, setEditedContent] = useState('');
 
   // Close menu on click outside
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setShowMenu({});
+      if (
+        Object.values(menuRefs.current).some((ref) => ref?.contains(e.target))
+      ) {
+        return; // Don't close if clicking inside any menu
       }
+      setShowMenu({});
     };
 
     document.addEventListener('mousedown', handleClickOutside);
@@ -46,6 +54,12 @@ const PostList = ({ posts, onLike }) => {
     }));
   };
 
+  const handleEditClick = (postId, postContent) => {
+    setEditingPostId(postId);
+    setEditedContent(postContent);
+    setShowMenu({}); // Close all menus
+  };
+
   return (
     <ul>
       {posts
@@ -58,7 +72,10 @@ const PostList = ({ posts, onLike }) => {
               <div className="flex items-center justify-between mr-2 mt-1">
                 <p>{post.username}:</p>
                 {user.sub === post.sub && (
-                  <div className="relative" ref={menuRef}>
+                  <div
+                    className="relative"
+                    ref={(node) => setMenuRef(post._id, node)}
+                  >
                     <button
                       onClick={() => toggleMenu(post._id)}
                       className="cursor-pointer"
@@ -70,9 +87,11 @@ const PostList = ({ posts, onLike }) => {
                     </button>
                     {showMenu[post._id] && (
                       <div className="absolute right-0 mt-2 shadow-lg bg-gray-200 rounded p-2">
-                        <button className="block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap cursor-pointer">
-                          <FontAwesomeIcon icon={faPenToSquare} className="" />{' '}
-                          Edit
+                        <button
+                          onClick={() => handleEditClick(post._id, post.post)}
+                          className="block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap cursor-pointer"
+                        >
+                          <FontAwesomeIcon icon={faPenToSquare} /> Edit
                         </button>
 
                         <button className="block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap cursor-pointer">
@@ -87,7 +106,15 @@ const PostList = ({ posts, onLike }) => {
                   </div>
                 )}
               </div>
-              <p className="px-2">{post.post}</p>
+              {editingPostId === post._id ? (
+                <textarea
+                  value={editedContent}
+                  onChange={(e) => setEditedContent(e.target.value)}
+                  className="border rounded p-2 w-full"
+                />
+              ) : (
+                <p>{post.post}</p>
+              )}
               <div className="flex mt-auto border-t border-gray-300 justify-end gap-x-5">
                 <button
                   onClick={() => onLike(post._id)}
