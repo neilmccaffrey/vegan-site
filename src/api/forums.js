@@ -75,3 +75,18 @@ export const addComment = async (topic, username, sub, postId, comment) => {
     console.error('Error adding comment:', error);
   }
 };
+
+export const editPost = async (topic, sub, postId, editedContent) => {
+  try {
+    const response = await axios.put(
+      `${API_URL}/api/forums/${topic}/${postId}/edit`,
+      {
+        sub,
+        editedContent,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error editing post:', error);
+  }
+};

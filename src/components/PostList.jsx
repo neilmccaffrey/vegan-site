@@ -14,7 +14,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import CommentList from './CommentList';
 
-const PostList = ({ posts, onLike }) => {
+const PostList = ({ posts, onLike, onEdit }) => {
   const [showComments, setShowComments] = useState({});
   const { user } = useContext(UserContext);
   const [showMenu, setShowMenu] = useState({});
@@ -25,6 +25,7 @@ const PostList = ({ posts, onLike }) => {
   const textAreaRef = useRef(null);
   const [editingPostId, setEditingPostId] = useState(null);
   const [editedContent, setEditedContent] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -46,7 +47,10 @@ const PostList = ({ posts, onLike }) => {
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (textAreaRef.current && !textAreaRef.current.contains(e.target)) {
-        setEditingPostId(null); // Close the text area when clicking outside
+        setTimeout(() => {
+          setEditingPostId(null);
+          setIsDisabled(false);
+        }, 1000); // Small delay for edit post button, close the text area when clicking outside
       }
     };
 
@@ -157,8 +161,12 @@ const PostList = ({ posts, onLike }) => {
                       Cancel
                     </button>
                     <button
-                      //onClick={}
-                      className="primary text-white px-1 md:px-3 py-1 rounded-full cursor-pointer ml-1"
+                      disabled={isDisabled}
+                      onClick={() => {
+                        onEdit(post._id, editedContent);
+                        setIsDisabled(true);
+                      }}
+                      className={`primary text-white px-1 md:px-3 py-1 rounded-full cursor-pointer ml-1 ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       Edit Post
                     </button>
@@ -205,6 +213,7 @@ const PostList = ({ posts, onLike }) => {
 PostList.propTypes = {
   posts: PropTypes.array.isRequired,
   onLike: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
 };
 
 export default PostList;

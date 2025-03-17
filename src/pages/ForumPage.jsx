@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '../context/UserContext';
-import { addPost } from '../api/forums';
+import { addPost, editPost } from '../api/forums';
 import { fetchPosts } from '../api/forums';
 import { userLike } from '../api/forums';
 
@@ -97,7 +97,15 @@ const ForumPage = () => {
     );
   };
 
-  // const handleEdit = async (postId) => {};
+  const handleEdit = async (postId, editedContent) => {
+    await editPost(topic, user.sub, postId, editedContent);
+    // Optimistically handle edit
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post._id === postId ? { ...post, post: editedContent } : post
+      )
+    );
+  };
 
   return (
     <div className="flex flex-col mt-20 items-center">
@@ -135,7 +143,7 @@ const ForumPage = () => {
             </div>
           </div>
         )}
-        <PostList posts={posts} onLike={handleLike} />
+        <PostList posts={posts} onLike={handleLike} onEdit={handleEdit} />
       </div>
     </div>
   );
