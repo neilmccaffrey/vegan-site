@@ -118,13 +118,15 @@ const UserProvider = ({ children }) => {
   };
 
   const manualLogout = () => {
+    localStorage.removeItem('refresh_token');
+    setRefreshToken(null); // Ensure state update
+
     const user = userPool.getCurrentUser(); // Get the current Cognito user
     if (user) {
       user.signOut(); // Clear the session
     }
     setUser({ username: null, sub: null });
     setIsAuthenticated(false);
-    localStorage.removeItem('refresh_token');
   };
 
   return (
