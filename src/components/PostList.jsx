@@ -163,6 +163,10 @@ const PostList = ({ posts, onLike, onEdit }) => {
                     <button
                       disabled={isDisabled}
                       onClick={() => {
+                        if (!editedContent.trim()) {
+                          alert('Post content cannot be empty.');
+                          return;
+                        }
                         onEdit(post._id, editedContent);
                         setIsDisabled(true);
                       }}
