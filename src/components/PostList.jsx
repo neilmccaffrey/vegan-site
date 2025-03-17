@@ -22,8 +22,39 @@ const PostList = ({ posts, onLike }) => {
   const setMenuRef = (postId, node) => {
     if (node) menuRefs.current[postId] = node;
   };
+  const textAreaRef = useRef(null);
   const [editingPostId, setEditingPostId] = useState(null);
   const [editedContent, setEditedContent] = useState('');
+
+  useEffect(() => {
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = 'auto'; // Reset height
+      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`; // Set height to fit content
+    }
+  }, [editingPostId]);
+
+  const handleInput = () => {
+    if (textAreaRef.current) {
+      if (textAreaRef.current) {
+        textAreaRef.current.style.height = 'auto';
+        textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+      }
+    }
+  };
+
+  //close textarea on click outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (textAreaRef.current && !textAreaRef.current.contains(e.target)) {
+        setEditingPostId(null); // Close the text area when clicking outside
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // Close menu on click outside
   useEffect(() => {
@@ -86,7 +117,7 @@ const PostList = ({ posts, onLike }) => {
                       />
                     </button>
                     {showMenu[post._id] && (
-                      <div className="absolute right-0 mt-2 shadow-lg bg-gray-200 rounded p-2">
+                      <div className="absolute right-0 mt-2 shadow-lg bg-gray-200 rounded p-2 z-50">
                         <button
                           onClick={() => handleEditClick(post._id, post.post)}
                           className="block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap cursor-pointer"
@@ -107,11 +138,32 @@ const PostList = ({ posts, onLike }) => {
                 )}
               </div>
               {editingPostId === post._id ? (
-                <textarea
-                  value={editedContent}
-                  onChange={(e) => setEditedContent(e.target.value)}
-                  className="border rounded p-2 w-full"
-                />
+                <div className="relative">
+                  <textarea
+                    value={editedContent}
+                    onChange={(e) => {
+                      setEditedContent(e.target.value);
+                      handleInput();
+                    }}
+                    rows={1}
+                    ref={textAreaRef}
+                    className="border rounded p-2 pb-10 w-full"
+                  />
+                  <div className="absolute bottom-2 right-2 mb-1">
+                    <button
+                      onClick={() => setEditingPostId(null)}
+                      className="bg-gray-400 text-white px-1 md:px-3 py-1 rounded-full cursor-pointer"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      //onClick={}
+                      className="primary text-white px-1 md:px-3 py-1 rounded-full cursor-pointer ml-1"
+                    >
+                      Edit Post
+                    </button>
+                  </div>
+                </div>
               ) : (
                 <p>{post.post}</p>
               )}
