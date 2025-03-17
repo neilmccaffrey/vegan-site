@@ -103,15 +103,18 @@ const UserProvider = ({ children }) => {
 
   // Log the user out
   const logout = () => {
-    const user = userPool.getCurrentUser(); // Get the current Cognito user
+    localStorage.removeItem('refresh_token'); // Clear stored refresh token first
+    setRefreshToken(null); // Ensure state update
+
+    const user = userPool.getCurrentUser();
     if (user) {
-      user.signOut(); // Clear the session
+      user.signOut(); // Clear Cognito session
     }
+
     setUser({ username: null, sub: null });
     setIsAuthenticated(false);
-    localStorage.removeItem('refresh_token');
-    // Redirect to login
-    navigate('/login', { state: { expiredSession: true } }); // Pass a flag indicating session is expired
+
+    navigate('/login', { state: { expiredSession: true } }); // Redirect after logout
   };
 
   const manualLogout = () => {
