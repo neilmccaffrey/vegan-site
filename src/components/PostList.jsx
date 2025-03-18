@@ -13,8 +13,9 @@ import PropTypes from 'prop-types';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import CommentList from './CommentList';
+import { deleteComment } from '../api/forums';
 
-const PostList = ({ posts, setPosts, onLike, onEdit, onDelete }) => {
+const PostList = ({ topic, posts, setPosts, onLike, onEdit, onDelete }) => {
   const [showComments, setShowComments] = useState({});
   const { user } = useContext(UserContext);
   const [showMenu, setShowMenu] = useState({});
@@ -103,6 +104,23 @@ const PostList = ({ posts, setPosts, onLike, onEdit, onDelete }) => {
     setEditingPostId(postId);
     setEditedContent(postContent);
     setShowMenu({}); // Close all menus
+  };
+
+  const handleDeleteComment = async (postId, commentId) => {
+    await deleteComment(topic, user.sub, commentId, postId);
+
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post._id === postId
+          ? {
+              ...post,
+              comments: post.comments.filter(
+                (comment) => comment._id !== commentId
+              ),
+            }
+          : post
+      )
+    );
   };
 
   return (
@@ -226,6 +244,7 @@ const PostList = ({ posts, setPosts, onLike, onEdit, onDelete }) => {
                 comments={post.comments}
                 postId={post._id}
                 onCommentAdded={handleCommentAdded}
+                onCommentDelete={handleDeleteComment}
               />
             )}
           </li>
@@ -240,6 +259,7 @@ PostList.propTypes = {
   onLike: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  topic: PropTypes.string.isRequired,
 };
 
 export default PostList;

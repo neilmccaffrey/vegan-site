@@ -150,6 +150,7 @@ const ForumPage = () => {
           </div>
         )}
         <PostList
+          topic={topic}
           posts={posts}
           setPosts={setPosts}
           onLike={handleLike}

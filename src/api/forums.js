@@ -104,3 +104,17 @@ export const deletePost = async (topic, sub, postId) => {
     console.error('Error deleting post:', error);
   }
 };
+
+export const deleteComment = async (topic, sub, commentId, postId) => {
+  try {
+    const response = await axios.delete(
+      `${API_URL}/api/forums/${topic}/${postId}/comments/${commentId}/delete`,
+      {
+        data: { sub },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting comment:', error);
+  }
+};
