@@ -151,6 +151,7 @@ const ForumPage = () => {
         )}
         <PostList
           posts={posts}
+          setPosts={setPosts}
           onLike={handleLike}
           onEdit={handleEdit}
           onDelete={handleDelete}

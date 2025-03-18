@@ -14,7 +14,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import CommentList from './CommentList';
 
-const PostList = ({ posts, onLike, onEdit, onDelete }) => {
+const PostList = ({ posts, setPosts, onLike, onEdit, onDelete }) => {
   const [showComments, setShowComments] = useState({});
   const { user } = useContext(UserContext);
   const [showMenu, setShowMenu] = useState({});
@@ -80,6 +80,16 @@ const PostList = ({ posts, onLike, onEdit, onDelete }) => {
       ...prevState,
       [postId]: !prevState[postId], // Toggle the visibility of comments for the clicked post
     }));
+  };
+
+  const handleCommentAdded = (postId, newComment) => {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post._id === postId
+          ? { ...post, comments: [...post.comments, newComment] }
+          : post
+      )
+    );
   };
 
   const toggleMenu = (postId) => {
@@ -212,7 +222,11 @@ const PostList = ({ posts, onLike, onEdit, onDelete }) => {
               </div>
             </div>
             {showComments[post._id] && (
-              <CommentList comments={post.comments} postId={post._id} />
+              <CommentList
+                comments={post.comments}
+                postId={post._id}
+                onCommentAdded={handleCommentAdded}
+              />
             )}
           </li>
         ))}
@@ -222,6 +236,7 @@ const PostList = ({ posts, onLike, onEdit, onDelete }) => {
 
 PostList.propTypes = {
   posts: PropTypes.array.isRequired,
+  setPosts: PropTypes.func.isRequired,
   onLike: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

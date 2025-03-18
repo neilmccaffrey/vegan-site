@@ -4,10 +4,9 @@ import { useParams } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { addComment } from '../api/forums';
 
-const CommentList = ({ comments, postId }) => {
+const CommentList = ({ comments, postId, onCommentAdded }) => {
   const textAreaRef = useRef(null);
   const [newComment, setNewComment] = useState('');
-  const [allComments, setAllComments] = useState(comments);
   const { topic } = useParams();
   const { user, isAuthenticated } = useContext(UserContext);
 
@@ -37,7 +36,7 @@ const CommentList = ({ comments, postId }) => {
       newComment
     );
 
-    setAllComments((prevComments) => [...prevComments, resComment]);
+    onCommentAdded(postId, resComment); // Update parent state
     setNewComment('');
   };
 
@@ -58,7 +57,7 @@ const CommentList = ({ comments, postId }) => {
               ? 'Add comment...'
               : 'You must log in to add comments'
           }
-          className={`bg-gray-50 md:w-200 text-black border-l border-r border-gray-300 border-b rounded p-2 pb-10 outline-none block h-auto w-full min-h-25 resize-none overflow-hidden focus:ring-0 ${allComments.length === 0 && 'mb-4 shadow-lg'}`}
+          className={`bg-gray-50 md:w-200 text-black border-l border-r border-gray-300 border-b rounded p-2 pb-10 outline-none block h-auto w-full min-h-25 resize-none overflow-hidden focus:ring-0 ${comments.length === 0 && 'mb-4 shadow-lg'}`}
         />
         {newComment && (
           <button
@@ -69,8 +68,8 @@ const CommentList = ({ comments, postId }) => {
           </button>
         )}
       </div>
-      <ul key={allComments.length}>
-        {allComments.map((comment) => {
+      <ul key={comments.length}>
+        {comments.map((comment) => {
           return (
             <li key={comment._id} className="group">
               <div
@@ -90,6 +89,7 @@ const CommentList = ({ comments, postId }) => {
 CommentList.propTypes = {
   comments: PropTypes.array.isRequired,
   postId: PropTypes.string.isRequired,
+  onCommentAdded: PropTypes.func.isRequired,
 };
 
 export default CommentList;
