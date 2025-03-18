@@ -129,9 +129,14 @@ const PostList = ({ posts, onLike, onEdit, onDelete }) => {
                           <FontAwesomeIcon icon={faPenToSquare} /> Edit
                         </button>
 
-                        <button className="block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap cursor-pointer">
+                        <button
+                          onClick={() => {
+                            onDelete(post._id);
+                            setShowMenu({});
+                          }}
+                          className="block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap cursor-pointer"
+                        >
                           <FontAwesomeIcon
-                            onClick={() => onDelete(post._id)}
                             icon={faTrashCan}
                             className="text-red-500"
                           />{' '}

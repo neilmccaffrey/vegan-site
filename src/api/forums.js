@@ -96,7 +96,7 @@ export const deletePost = async (topic, sub, postId) => {
     const response = await axios.delete(
       `${API_URL}/api/forums/${topic}/${postId}/delete`,
       {
-        sub,
+        data: { sub }, // need data for delete
       }
     );
     return response.data;
