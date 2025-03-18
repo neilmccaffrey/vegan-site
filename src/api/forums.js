@@ -90,3 +90,17 @@ export const editPost = async (topic, sub, postId, editedContent) => {
     console.error('Error editing post:', error);
   }
 };
+
+export const deletePost = async (topic, sub, postId) => {
+  try {
+    const response = await axios.delete(
+      `${API_URL}/api/forums/${topic}/${postId}/delete`,
+      {
+        sub,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting post:', error);
+  }
+};

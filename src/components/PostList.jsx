@@ -14,7 +14,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import CommentList from './CommentList';
 
-const PostList = ({ posts, onLike, onEdit }) => {
+const PostList = ({ posts, onLike, onEdit, onDelete }) => {
   const [showComments, setShowComments] = useState({});
   const { user } = useContext(UserContext);
   const [showMenu, setShowMenu] = useState({});
@@ -131,6 +131,7 @@ const PostList = ({ posts, onLike, onEdit }) => {
 
                         <button className="block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap cursor-pointer">
                           <FontAwesomeIcon
+                            onClick={() => onDelete(post._id)}
                             icon={faTrashCan}
                             className="text-red-500"
                           />{' '}
@@ -218,6 +219,7 @@ PostList.propTypes = {
   posts: PropTypes.array.isRequired,
   onLike: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default PostList;

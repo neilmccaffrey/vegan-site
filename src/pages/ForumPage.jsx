@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '../context/UserContext';
-import { addPost, editPost } from '../api/forums';
+import { addPost, deletePost, editPost } from '../api/forums';
 import { fetchPosts } from '../api/forums';
 import { userLike } from '../api/forums';
 
@@ -107,6 +107,12 @@ const ForumPage = () => {
     );
   };
 
+  const handleDelete = async (postId) => {
+    await deletePost(topic, user.sub, postId);
+    // Optimistically handle delete
+    setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
+  };
+
   return (
     <div className="flex flex-col mt-20 items-center">
       <h1>{topic.charAt(0).toUpperCase() + topic.slice(1)} Forum</h1>
@@ -143,7 +149,12 @@ const ForumPage = () => {
             </div>
           </div>
         )}
-        <PostList posts={posts} onLike={handleLike} onEdit={handleEdit} />
+        <PostList
+          posts={posts}
+          onLike={handleLike}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
       </div>
     </div>
   );
