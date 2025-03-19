@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '../context/UserContext';
+import { Menu, X } from 'lucide-react';
 
 const Header = () => {
   const { user, isAuthenticated, manualLogout } = useContext(UserContext);
@@ -22,9 +23,10 @@ const Header = () => {
 
   return (
     <header className="w-full fixed top-0 p-2 md:p-4">
-      <div className="flex justify-between items-center w-full md:space-x-96">
+      <div className="flex justify-between items-center w-full">
         <ThemeToggle />
-        <div className="flex gap-x-4">
+
+        <nav className="hidden md:flex gap-x-4">
           <Link to="/" className="hover:scale-125">
             Home
           </Link>
@@ -58,7 +60,68 @@ const Header = () => {
               )}
             </div>
           )}
-        </div>
+        </nav>
+
+        {/* Mobile Menu */}
+        <button
+          className="md:hidden block p-2"
+          onClick={() => setShowMenu(!showMenu)}
+        >
+          {showMenu ? <X size={28} /> : <Menu size={28} />}
+        </button>
+
+        {showMenu && (
+          <div
+            ref={menuRef}
+            className="absolute top-14 left-0 w-full bg-white shadow-lg p-4 flex flex-col items-start md:hidden primary"
+          >
+            <Link
+              to="/"
+              className="py-2 w-full text-left underline"
+              onClick={() => setShowMenu(false)}
+            >
+              Home
+            </Link>
+            <Link
+              to="/recipes"
+              className="py-2 w-full text-left underline"
+              onClick={() => setShowMenu(false)}
+            >
+              Recipes
+            </Link>
+            <Link
+              to="/forums"
+              className="py-2 w-full text-left underline"
+              onClick={() => setShowMenu(false)}
+            >
+              Forums
+            </Link>
+            {!isAuthenticated ? (
+              <Link
+                to="/login"
+                className="py-2 w-full text-left underline"
+                onClick={() => setShowMenu(false)}
+              >
+                Login
+              </Link>
+            ) : (
+              <>
+                <button className="py-2 w-full text-left">
+                  {user.username}
+                </button>
+                <button
+                  onClick={() => {
+                    manualLogout();
+                    setShowMenu(false);
+                  }}
+                  className="py-2 w-full text-left hover:bg-gray-200 underline"
+                >
+                  Sign Out
+                </button>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </header>
   );
