@@ -72,7 +72,7 @@ const Recipes = () => {
             <option value="American">American</option>
             {/* Add more categories here */}
           </select>
-          <ul>
+          <ul className="mt-5">
             {recipes.map((recipe) => (
               <li
                 key={recipe.id}

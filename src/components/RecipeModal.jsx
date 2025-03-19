@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 const RecipeModal = ({ recipe, onClose }) => {
-  const { name, servings, ingredients, instructions } = recipe;
+  const { name, servings, ingredients, instructions, credit } = recipe;
 
   // close modal on click outside of modal
   const handleBackgroundClick = (e) => {
@@ -16,7 +16,7 @@ const RecipeModal = ({ recipe, onClose }) => {
       onClick={handleBackgroundClick}
       className="fixed inset-0 flex bg-opacity-30 backdrop-blur-xs justify-center items-center z-50 "
     >
-      <div className="p-4 border rounded shadow-lg bg-white modal md:ml-40 mb-20 relative max-h-[80vh] md:max-h-[95vh] mt-20 overflow-y-auto">
+      <div className="p-4 border rounded shadow-lg bg-white modal md:ml-40 mb-20 relative max-h-[80vh] md:max-h-[95vh] mt-20 overflow-y-auto flex flex-col">
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-xl text-gray-600"
@@ -41,6 +41,7 @@ const RecipeModal = ({ recipe, onClose }) => {
             <li key={index}>{step}</li>
           ))}
         </ol>
+        {credit && <p className="mt-auto self-end">credit: {credit}</p>}
       </div>
     </div>
   );
@@ -52,6 +53,7 @@ RecipeModal.propTypes = {
     servings: PropTypes.number.isRequired,
     ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
     instructions: PropTypes.arrayOf(PropTypes.string).isRequired,
+    credit: PropTypes.string,
   }).isRequired,
   onClose: PropTypes.func.isRequired,
 };
