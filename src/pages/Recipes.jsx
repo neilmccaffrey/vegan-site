@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import RecipeModal from '../components/RecipeModal';
 import RecipeForm from '../components/RecipeForm';
+import { getRecipes } from '../api/recipes';
 
 const Recipes = () => {
   const [allRecipes, setAllRecipes] = useState([]);
@@ -11,10 +11,16 @@ const Recipes = () => {
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:5001/api/recipes')
-      .then((response) => setAllRecipes(response.data))
-      .catch((error) => console.error('Error fetching recipes:', error));
+    const fetchRecipes = async () => {
+      try {
+        const fetchedRecipes = await getRecipes();
+        setAllRecipes(fetchedRecipes);
+      } catch (error) {
+        console.error('Failed to fetch recipes:', error);
+      }
+    };
+
+    fetchRecipes();
   }, []);
 
   // show recipes based on category
