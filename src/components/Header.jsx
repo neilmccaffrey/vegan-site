@@ -36,6 +36,9 @@ const Header = () => {
           <Link to="/forums" className="hover:scale-125">
             Forums
           </Link>
+          <Link to="allthingsvegan" className="hover:scale-125">
+            Vegan Things
+          </Link>
           {!isAuthenticated ? (
             <Link to="/login" className="hover:scale-125">
               Login
@@ -95,6 +98,13 @@ const Header = () => {
               onClick={() => setShowMenu(false)}
             >
               Forums
+            </Link>
+            <Link
+              to="allthingsvegan"
+              className="py-2 w-full text-left underline"
+              onClick={() => setShowMenu(false)}
+            >
+              Vegan Things
             </Link>
             {!isAuthenticated ? (
               <Link

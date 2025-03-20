@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import { UserProvider } from './context/UserContext';
 import Forums from './pages/Forums';
 import ForumPage from './pages/ForumPage';
+import AllThingsVegan from './pages/AllThingsVegan';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="forums" element={<Forums />} />
             <Route path="forums/:topic" element={<ForumPage />} />
+            <Route path="allthingsvegan" element={<AllThingsVegan />} />
           </Route>
         </Routes>
       </UserProvider>
