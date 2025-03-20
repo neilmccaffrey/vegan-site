@@ -11,3 +11,12 @@ export const getRecipes = async () => {
     throw error;
   }
 };
+
+export const submitRecipe = async (formData) => {
+  try {
+    await axios.post(`${API_URL}/submit-recipe`, formData);
+  } catch (error) {
+    console.log('Error submitting recipe: ', error.message);
+    throw error;
+  }
+};

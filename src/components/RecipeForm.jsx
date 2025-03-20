@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
+import { submitRecipe } from '../api/recipes';
 
 const RecipeForm = ({ setShowForm }) => {
   const [formData, setFormData] = useState({
@@ -11,6 +11,7 @@ const RecipeForm = ({ setShowForm }) => {
     credit: '',
   });
   const [error, setError] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +25,7 @@ const RecipeForm = ({ setShowForm }) => {
     e.preventDefault();
     // Check if required fields are filled
     const { recipeName, ingredients, instructions, servings } = formData;
+    setIsDisabled(true);
     if (!recipeName || !ingredients || !instructions || !servings) {
       setError(
         'Recipe Name, Ingredients, Instructions, and Servings are required.'
@@ -31,18 +33,19 @@ const RecipeForm = ({ setShowForm }) => {
       return;
     }
     try {
-      await axios.post('http://localhost:5001/submit-recipe', formData);
+      await submitRecipe(formData);
       alert('Recipe Submitted!');
+      //if form is valid
+      setError('');
+      setShowForm(false);
     } catch (error) {
       if (error.response) {
-        // show the error message from the response
         alert('Error submitting recipe: ' + error.response.data.message);
+      } else {
+        alert('An unexpected error occurred.');
       }
     }
-    //if form is valid
-    setError('');
-
-    setShowForm(false);
+    setIsDisabled(false);
   };
 
   const handleCancel = () => {
@@ -118,6 +121,7 @@ const RecipeForm = ({ setShowForm }) => {
         <button
           type="submit"
           className=" p-2 bg-blue-500 text-white rounded cursor-pointer"
+          disabled={isDisabled}
         >
           Submit Recipe
         </button>
