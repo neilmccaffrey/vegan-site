@@ -36,7 +36,7 @@ const RecipeModal = ({ recipe, onClose }) => {
         <p>
           <strong>Instructions:</strong>
         </p>
-        <ol className="list-disc ml-5">
+        <ol className="list-decimal ml-5">
           {instructions.map((step, index) => (
             <li key={index}>{step}</li>
           ))}
