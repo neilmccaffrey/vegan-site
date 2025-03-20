@@ -24,7 +24,7 @@ const AllThingsVegan = () => {
             <span className="text-xl font-bold">{item.category}</span>
             <ul>
               {item.items.map((subItem, index) => (
-                <li key={index} className="mb-2 border-b">
+                <li key={index} className="mb-2 border-b last:border-none">
                   <div className="flex justify-between items-center p-2">
                     <div className="flex-1 ">
                       <span className="block">{subItem.name}</span>
