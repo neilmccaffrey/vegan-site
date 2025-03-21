@@ -31,6 +31,8 @@ const RestaurantsList = ({ loading, setLoading }) => {
   }, []);
 
   const fetchRestaurants = async (token = null) => {
+    // setLoading here so state updates immediately in home
+    setLoading(true);
     try {
       //token empty on first call
       const params = { latitude, longitude, nextPageToken: token || '' };
@@ -52,7 +54,6 @@ const RestaurantsList = ({ loading, setLoading }) => {
 
   useEffect(() => {
     if (latitude && longitude) {
-      setLoading(true);
       fetchRestaurants().finally(() => setLoading(false));
     }
   }, [latitude, longitude]);
@@ -101,7 +102,7 @@ const RestaurantsList = ({ loading, setLoading }) => {
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(restaurant.vicinity)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-500 underline cursor-pointer"
+                    className="text-blue-300 underline cursor-pointer"
                   >
                     {restaurant.vicinity}
                   </a>
@@ -111,7 +112,7 @@ const RestaurantsList = ({ loading, setLoading }) => {
                     href={restaurant.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="underline text-blue-500"
+                    className="underline text-blue-300"
                   >
                     Visit Website
                   </a>
@@ -120,7 +121,7 @@ const RestaurantsList = ({ loading, setLoading }) => {
                       <span>Call:</span>
                       <a
                         href={`tel:${restaurant.formatted_phone_number}`}
-                        className="text-blue-500 underline"
+                        className="text-blue-300 underline"
                       >
                         {restaurant.formatted_phone_number}
                       </a>
