@@ -2,17 +2,16 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
-const RestaurantsList = () => {
+const RestaurantsList = ({ loading, setLoading }) => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
   const [nextPageToken, setNextPageToken] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   // used to prevent show more button from calling the same fetch multiple times on click
   const handleFetch = async () => {
-    if (loading) return;
     setLoading(true);
     await fetchRestaurants(nextPageToken);
     setLoading(false);
@@ -53,7 +52,8 @@ const RestaurantsList = () => {
 
   useEffect(() => {
     if (latitude && longitude) {
-      fetchRestaurants();
+      setLoading(true);
+      fetchRestaurants().finally(() => setLoading(false));
     }
   }, [latitude, longitude]);
 
@@ -146,6 +146,11 @@ const RestaurantsList = () => {
       </div>
     </>
   );
+};
+
+RestaurantsList.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  setLoading: PropTypes.func.isRequired,
 };
 
 export default RestaurantsList;

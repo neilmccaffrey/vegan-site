@@ -4,6 +4,8 @@ import RestaurantsList from '../components/RestaurantsList';
 
 const Home = () => {
   const [displayRestaurants, setDisplayRestaurants] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   return (
     <>
       <Header />
@@ -16,11 +18,20 @@ const Home = () => {
         )}
         <button
           onClick={() => setDisplayRestaurants(!displayRestaurants)}
-          className="cursor-pointer rounded primary shadow-md p-2 w-fit self-center"
+          disabled={loading}
+          className={`cursor-pointer rounded primary shadow-md p-2 w-fit self-center ${
+            loading ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
         >
-          {!displayRestaurants ? 'Show Restaurants' : 'Hide Restaurants'}
+          {loading
+            ? 'Loading...'
+            : displayRestaurants
+              ? 'Hide Restaurants'
+              : 'Show Restaurants'}
         </button>
-        {displayRestaurants && <RestaurantsList />}
+        {displayRestaurants && (
+          <RestaurantsList loading={loading} setLoading={setLoading} />
+        )}
       </div>
     </>
   );
