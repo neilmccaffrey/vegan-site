@@ -8,7 +8,7 @@ const Home = () => {
     <>
       <Header />
       {/* give container width of w-128 to center button relative to list width */}
-      <div className="flex flex-col mt-20 md:ml-10 md:w-128 w-96 mb-20">
+      <div className="flex flex-col mt-20 md:ml-10 md:w-128 md:w-96 mb-20">
         {!displayRestaurants && (
           <span className="self-center mb-2 text-xs">
             Click to show all vegan/vegan friendly places within 25 miles!

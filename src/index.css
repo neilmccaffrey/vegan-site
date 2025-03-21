@@ -17,17 +17,17 @@ header {
 
 /* Dark Mode */
 .dark body {
-  @apply bg-gray-600 text-gray-200;
+  @apply bg-gray-700 text-gray-100;
 }
 .dark .primary {
   @apply bg-blue-400 text-white;
 }
 .dark header {
-  @apply bg-gray-700 text-gray-200 shadow-lg border-b border-gray-700;
+  @apply bg-gray-600 text-gray-100 shadow-lg border-b border-gray-700;
 }
 
 .dark .modal {
-  @apply bg-gray-300 text-black;
+  @apply bg-gray-600 text-gray-100;
 }
 
 .dark .moveButton {

@@ -17,7 +17,7 @@ const AllThingsVegan = () => {
   }, []);
 
   return (
-    <div className="mt-20 md:ml-5 max-w-125">
+    <div className="mt-20 md:ml-5 w-screen md:max-w-125">
       <ul>
         {items.map((item) => (
           <li

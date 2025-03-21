@@ -76,7 +76,7 @@ const Header = () => {
         {showMenu && (
           <div
             ref={menuRef}
-            className="absolute top-14 left-0 w-full bg-white shadow-lg p-4 flex flex-col items-start md:hidden primary"
+            className="absolute top-14 left-0 w-full bg-white shadow-lg p-4 flex flex-col items-start md:hidden modal"
           >
             <Link
               to="/"
