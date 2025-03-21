@@ -20,7 +20,10 @@ const AllThingsVegan = () => {
     <div className="mt-20 md:ml-5 max-w-125">
       <ul>
         {items.map((item) => (
-          <li key={item.id} className="mt-10 bg-gray-100 p-2 border rounded">
+          <li
+            key={item.id}
+            className="mt-10 bg-gray-100 modal p-2 border rounded"
+          >
             <span className="text-xl font-bold">{item.category}</span>
             <ul>
               {item.items.map((subItem, index) => (
@@ -30,7 +33,7 @@ const AllThingsVegan = () => {
                       <span className="block">{subItem.name}</span>
                       <p className="text-xs">{subItem.description}</p>
                     </div>
-                    <button className="border bg-blue-400 text-white rounded-4xl p-1 text-xs flex-shrink-0">
+                    <button className="primary rounded-4xl p-1 text-xs flex-shrink-0">
                       <a
                         href={subItem.website}
                         target="_blank"

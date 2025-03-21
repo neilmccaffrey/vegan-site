@@ -120,7 +120,7 @@ const RecipeForm = ({ setShowForm }) => {
         </button>
         <button
           type="submit"
-          className=" p-2 bg-blue-500 text-white rounded cursor-pointer"
+          className=" p-2 bg-blue-400 text-white rounded cursor-pointer"
           disabled={isDisabled}
         >
           Submit Recipe

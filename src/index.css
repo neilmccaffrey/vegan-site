@@ -2,24 +2,28 @@
 
 /* Light Mode */
 body {
-  @apply bg-green-100 text-green-900;
+  @apply bg-gray-100;
 }
 .primary {
-  @apply bg-green-600 text-white;
+  @apply bg-blue-400 text-white;
 }
 header {
   @apply bg-green-300 text-white shadow-md;
 }
 
+.modal {
+  @apply bg-white;
+}
+
 /* Dark Mode */
 .dark body {
-  @apply bg-gray-600 text-green-400;
+  @apply bg-gray-600 text-gray-200;
 }
 .dark .primary {
-  @apply bg-green-400 text-gray-900;
+  @apply bg-blue-400 text-white;
 }
 .dark header {
-  @apply bg-gray-700 text-green-400 shadow-lg border-b border-gray-700;
+  @apply bg-gray-700 text-gray-200 shadow-lg border-b border-gray-700;
 }
 
 .dark .modal {

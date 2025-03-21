@@ -27,7 +27,7 @@ const Forums = () => {
   return (
     <>
       <h1 className="flex mt-20 items-center justify-center">Forums</h1>
-      <div className="flex flex-col mt-5 items-center border rounded shadow-lg max-w-150 mx-auto justify-center">
+      <div className="flex flex-col mt-5 items-center border rounded shadow-lg max-w-150 mx-auto justify-center modal">
         <div className="flex w-full border-b justify-between">
           <span className="flex-1 py-2 ml-5">Topics</span>
           <span className="border-l border-gray-300 px-2 py-2 flex w-16">
