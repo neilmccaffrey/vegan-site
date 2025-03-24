@@ -8,6 +8,17 @@ const Home = () => {
 
   return (
     <>
+      <title>Friendly Vegan | Vegan Restaurants Near You</title>
+      <meta
+        name="description"
+        content="Discover top vegan and vegan-friendly restaurants within 25 miles."
+      />
+      <meta
+        name="keywords"
+        content="vegan, plant-based, restaurants, food, healthy eating"
+      />
+      {/* <link rel="canonical" href="https://yourdomain.com" /> */}
+
       <Header />
       {/* give container width of w-128 to center button relative to list width */}
       <div className="flex flex-col mt-20 md:ml-10 md:w-128 md:w-96 mb-20">

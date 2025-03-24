@@ -54,6 +54,17 @@ const Recipes = () => {
 
   return (
     <>
+      <title>Friendly Vegan | Vegan recipes</title>
+      <meta
+        name="description"
+        content="Discover vegan and vegan-friendly recipes."
+      />
+      <meta
+        name="keywords"
+        content="vegan, plant-based, restaurants, food, healthy eating"
+      />
+      {/* <link rel="canonical" href="https://yourdomain.com/vegan-recipes" /> */}
+
       <div className="mt-20 ml-5">
         <span>
           To submit a recipe click{' '}
