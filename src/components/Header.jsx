@@ -30,7 +30,7 @@ const Header = () => {
           <Link to="/" className="hover:scale-125">
             Home
           </Link>
-          <Link to="/recipes" className="hover:scale-125">
+          <Link to="/vegan-recipes" className="hover:scale-125">
             Recipes
           </Link>
           <Link to="/forums" className="hover:scale-125">
@@ -86,7 +86,7 @@ const Header = () => {
               Home
             </Link>
             <Link
-              to="/recipes"
+              to="/vegan-recipes"
               className="py-2 w-full text-left underline"
               onClick={() => setShowMenu(false)}
             >
