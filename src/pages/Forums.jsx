@@ -26,6 +26,14 @@ const Forums = () => {
 
   return (
     <>
+      <title>Friendly Vegan | Vegan forums</title>
+      <meta name="description" content="Chat with fellow vegans." />
+      <meta
+        name="keywords"
+        content="vegan, plant-based, restaurants, food, healthy eating, chat"
+      />
+      {/* <link rel="canonical" href="https://yourdomain.com/forums" /> */}
+
       <h1 className="flex mt-20 items-center justify-center">Forums</h1>
       <div className="flex flex-col mt-5 items-center border rounded shadow-lg max-w-150 mx-auto justify-center modal">
         <div className="flex w-full border-b justify-between">
