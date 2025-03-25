@@ -16,10 +16,10 @@ const RecipeModal = ({ recipe, onClose }) => {
       onClick={handleBackgroundClick}
       className="fixed inset-0 flex bg-opacity-30 backdrop-blur-xs justify-center items-center z-50 "
     >
-      <div className="p-4 border rounded shadow-lg bg-white modal md:ml-40 mb-20 relative max-h-[80vh] md:max-h-[95vh] mt-20 overflow-y-auto flex flex-col">
+      <div className="p-4 border rounded shadow-lg bg-white modal md:ml-40 mb-20 relative max-h-[80vh] md:max-h-[95vh] mt-20 overflow-y-auto flex flex-col max-w-200">
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-xl text-gray-600"
+          className="absolute top-2 right-2 text-xl text-gray-100 md:text-gray-600 "
         >
           X
         </button>
