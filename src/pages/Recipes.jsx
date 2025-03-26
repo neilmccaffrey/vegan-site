@@ -84,10 +84,10 @@ const Recipes = () => {
           >
             <option value="">Select Category</option>
             <option value="All">All</option>
-            <option value="Mexican">Mexican</option>
-            <option value="Italian">Italian</option>
             <option value="American">American</option>
             <option value="Asian">Asian</option>
+            <option value="Italian">Italian</option>
+            <option value="Mexican">Mexican</option>
             {/* Add more categories here */}
           </select>
           <ul className="mt-5">
