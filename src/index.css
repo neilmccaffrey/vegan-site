@@ -2,7 +2,7 @@
 
 /* Light Mode */
 body {
-  @apply bg-gray-100;
+  @apply bg-gray-50;
 }
 .primary {
   @apply bg-blue-400 text-white;
