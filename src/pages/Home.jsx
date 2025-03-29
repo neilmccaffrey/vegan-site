@@ -104,12 +104,43 @@ const Home = () => {
               <strong>lower cholesterol and blood pressure</strong>
               compared to meat-eaters.
             </p>
+            <div className="flex flex-col mt-10 max-w-100">
+              <form className="border border-gray-200 p-2">
+                <p className="text-sm">
+                  See your impact! Enter how long you have been vegan.
+                </p>
+                <div className="flex gap-x-5 justify-center">
+                  <div>
+                    <label>Years: </label>
+                    <input
+                      placeholder="0"
+                      type="number"
+                      inputMode="numeric"
+                      className="border border-gray-200 placeholder-gray-200 rounded p-2 mt-1 w-25"
+                    />
+                  </div>
+                  <div>
+                    <label>Months: </label>
+                    <input
+                      placeholder="0"
+                      type="number"
+                      inputMode="numeric"
+                      className="border border-gray-200 placeholder-gray-200 rounded p-2 mt-1 w-25"
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-center mt-2">
+                  <button
+                    type="submit"
+                    className="p-2 bg-blue-400 text-white rounded cursor-pointer w-75"
+                    disabled={false}
+                  >
+                    Calculate
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
-        <div>
-          <form>
-            <input></input>
-          </form>
         </div>
       </div>
     </>
