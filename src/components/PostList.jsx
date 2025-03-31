@@ -134,44 +134,62 @@ const PostList = ({ topic, posts, setPosts, onLike, onEdit, onDelete }) => {
             >
               <div className="flex items-center justify-between mr-2 mt-1">
                 <p>{post.username}:</p>
+                {!(user.sub === post.sub) && (
+                  <p>
+                    {new Date(post.createdAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </p>
+                )}
                 {user.sub === post.sub && (
-                  <div
-                    className="relative"
-                    ref={(node) => setMenuRef(post._id, node)}
-                  >
-                    <button
-                      onClick={() => toggleMenu(post._id)}
-                      className="cursor-pointer"
+                  <div className="flex gap-x-2">
+                    <p>
+                      {new Date(post.createdAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </p>
+                    <div
+                      className="relative"
+                      ref={(node) => setMenuRef(post._id, node)}
                     >
-                      <FontAwesomeIcon
-                        icon={faEllipsis}
-                        className="text-gray-400"
-                      />
-                    </button>
-                    {showMenu[post._id] && (
-                      <div className="absolute right-0 mt-2 shadow-lg bg-gray-200 rounded p-2 z-50">
-                        <button
-                          onClick={() => handleEditClick(post._id, post.post)}
-                          className="block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap cursor-pointer"
-                        >
-                          <FontAwesomeIcon icon={faPenToSquare} /> Edit
-                        </button>
+                      <button
+                        onClick={() => toggleMenu(post._id)}
+                        className="cursor-pointer"
+                      >
+                        <FontAwesomeIcon
+                          icon={faEllipsis}
+                          className="text-gray-400"
+                        />
+                      </button>
+                      {showMenu[post._id] && (
+                        <div className="absolute right-0 mt-2 shadow-lg bg-gray-200 rounded p-2 z-50">
+                          <button
+                            onClick={() => handleEditClick(post._id, post.post)}
+                            className="block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap cursor-pointer"
+                          >
+                            <FontAwesomeIcon icon={faPenToSquare} /> Edit
+                          </button>
 
-                        <button
-                          onClick={() => {
-                            onDelete(post._id);
-                            setShowMenu({});
-                          }}
-                          className="block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap cursor-pointer"
-                        >
-                          <FontAwesomeIcon
-                            icon={faTrashCan}
-                            className="text-red-500"
-                          />{' '}
-                          Delete
-                        </button>
-                      </div>
-                    )}
+                          <button
+                            onClick={() => {
+                              onDelete(post._id);
+                              setShowMenu({});
+                            }}
+                            className="block w-full text-left px-4 py-2 hover:bg-gray-100 whitespace-nowrap cursor-pointer"
+                          >
+                            <FontAwesomeIcon
+                              icon={faTrashCan}
+                              className="text-red-500"
+                            />{' '}
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>
