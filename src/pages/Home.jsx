@@ -5,6 +5,17 @@ import RestaurantsList from '../components/RestaurantsList';
 const Home = () => {
   const [displayRestaurants, setDisplayRestaurants] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [years, setYears] = useState('');
+  const [months, setMonths] = useState('');
+  const [days, setDays] = useState(0);
+  const [showStats, setShowStats] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const totalDays = months * 30 + years * 365;
+    setDays(totalDays);
+    setShowStats(true);
+  };
 
   return (
     <>
@@ -21,7 +32,7 @@ const Home = () => {
 
       <Header />
       {/* give container width of w-128 to center button relative to list width */}
-      <div className="flex flex-col md:flex-row mt-20">
+      <div className="flex flex-col md:flex-row mt-20 mb-20">
         <div className="flex flex-col md:ml-10 md:w-128 md:w-96 mb-20">
           {!displayRestaurants && (
             <span className="self-center mb-2 text-xs">
@@ -101,11 +112,14 @@ const Home = () => {
             </p>
             <p className="ml-3">
               • Vegans tend to have{' '}
-              <strong>lower cholesterol and blood pressure</strong>
+              <strong>lower cholesterol and blood pressure </strong>
               compared to meat-eaters.
             </p>
-            <div className="flex flex-col mt-10 max-w-100">
-              <form className="border border-gray-200 p-2">
+            <div className="flex flex-col md:flex-row mt-10 max-w-100 md:max-w-full">
+              <form
+                onSubmit={handleSubmit}
+                className="border border-gray-200 p-2 min-w-100"
+              >
                 <p className="text-sm">
                   See your impact! Enter how long you have been vegan.
                 </p>
@@ -113,8 +127,12 @@ const Home = () => {
                   <div>
                     <label>Years: </label>
                     <input
+                      value={years}
+                      onChange={(e) =>
+                        setYears(e.target.value.replace(/[^0-9]/g, ''))
+                      }
                       placeholder="0"
-                      type="number"
+                      type="text"
                       inputMode="numeric"
                       className="border border-gray-200 placeholder-gray-200 rounded p-2 mt-1 w-25"
                     />
@@ -122,8 +140,14 @@ const Home = () => {
                   <div>
                     <label>Months: </label>
                     <input
+                      value={months}
+                      onChange={(e) => {
+                        let value = e.target.value.replace(/[^0-9]/g, '');
+                        if (value > 11) value = '11'; // Limit max to 11
+                        setMonths(value);
+                      }}
                       placeholder="0"
-                      type="number"
+                      type="text"
                       inputMode="numeric"
                       className="border border-gray-200 placeholder-gray-200 rounded p-2 mt-1 w-25"
                     />
@@ -139,6 +163,37 @@ const Home = () => {
                   </button>
                 </div>
               </form>
+              {showStats && (
+                <div className="w-full border border-gray-200 p-2 border-t-0 md:border-t md:border-l-0 md:mt-0">
+                  <div className="flex flex-col text-center">
+                    <strong>YOU HAVE SAVED:</strong>
+                    <div className="flex ml-2 mt-2 items-center justify-between">
+                      <strong className="text-xs">Animal lives:</strong>
+                      <strong className="bg-green-400 text-white ml-5 w-50 md:w-75">
+                        ~{days.toLocaleString()}
+                      </strong>
+                    </div>
+                    <div className="flex ml-2 mt-2 items-center justify-between">
+                      <strong className="text-xs">Gallons of water:</strong>
+                      <strong className="bg-green-400 text-white ml-5 w-50 md:w-75">
+                        ~{(days * 600).toLocaleString()}
+                      </strong>
+                    </div>
+                    <div className="flex ml-2 mt-2 items-center justify-between">
+                      <strong className="text-xs">SQ FT of forest:</strong>
+                      <strong className="bg-green-400 text-white ml-5 w-50 md:w-75">
+                        ~{(days * 30).toLocaleString()}
+                      </strong>
+                    </div>
+                    <div className="flex ml-2 mt-2 items-center justify-between">
+                      <strong className="text-xs">LBS of CO2:</strong>
+                      <strong className="bg-green-400 text-white ml-5 w-50 md:w-75">
+                        ~{(days * 20).toLocaleString()}
+                      </strong>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
