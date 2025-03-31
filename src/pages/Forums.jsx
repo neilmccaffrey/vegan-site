@@ -47,7 +47,7 @@ const Forums = () => {
             <li key={index} className="flex w-full border-b last:border-b-0">
               <Link
                 to={`/forums/${topic.name.toLowerCase()}`}
-                className="flex-1 py-2 ml-5 underline text-blue-500"
+                className="flex-1 py-2 ml-5 underline text-blue-300 text-lg"
               >
                 {topic.name.charAt(0).toUpperCase() + topic.name.slice(1)}
               </Link>
