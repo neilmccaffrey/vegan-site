@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Header from '../components/Header';
 import RestaurantsList from '../components/RestaurantsList';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [displayRestaurants, setDisplayRestaurants] = useState(false);
@@ -56,8 +57,44 @@ const Home = () => {
             <RestaurantsList loading={loading} setLoading={setLoading} />
           )}
         </div>
-        <div className="flex w-full mr-1 justify-center">
-          <div className="flex flex-col ml-2">
+        <div className="flex w-full justify-center md:ml-2 mr-2">
+          <div className="flex flex-col">
+            <p className="ml-2 mb-10 text-xs md:text-base">
+              “When the suffering of another creature causes you to feel pain,
+              do not submit to the initial desire to flee from the suffering
+              one, but on the contrary, come closer, as close as you can, and
+              try to help.” – Leo Tolstoy
+            </p>
+            <div className="border border-gray-200 shadow-lg rounded-2xl mb-10 p-6">
+              <div className="flex flex-col items-center p-2">
+                <p className="text-sm md:text-base">
+                  Join the discussion in our Vegan Forums! Whether you’re just
+                  starting out, curious about veganism, or looking to connect
+                  with like-minded people, there’s a place for you. Ask
+                  questions, share experiences, and explore a kinder way of
+                  living!
+                </p>
+                <Link
+                  to="/forums"
+                  className="cursor-pointer rounded primary shadow-md p-2 w-75 text-center mt-2"
+                >
+                  Forums
+                </Link>
+              </div>
+              <div className="flex flex-col items-center p-2">
+                <p className="text-sm md:text-base">
+                  Explore our Recipes Section! Discover delicious vegan dishes
+                  or share your own creations with the community. Submit your
+                  favorite recipes and inspire others to eat plant-based!
+                </p>
+                <Link
+                  to="/vegan-recipes"
+                  className="cursor-pointer rounded primary shadow-md p-2 w-75 text-center mt-2"
+                >
+                  Recipes
+                </Link>
+              </div>
+            </div>
             <p className="text-4xl md:text-6xl text-center">
               🌱 Being Vegan 🌱
             </p>
@@ -67,8 +104,8 @@ const Home = () => {
               <strong>30 animal lives per month</strong> (~365 per year).
             </p>
             <p className="ml-3">
-              • This includes farm animals like chickens, pigs, cows, and fish
-              that would otherwise be killed for food.
+              • This includes animals like chickens, pigs, cows, and fish—along
+              with many others—that would otherwise be killed for food.
             </p>
             <strong className="mt-5 text-xl">💧 Water Conservation!</strong>
             <p className="ml-3">
@@ -115,10 +152,10 @@ const Home = () => {
               <strong>lower cholesterol and blood pressure </strong>
               compared to meat-eaters.
             </p>
-            <div className="flex flex-col md:flex-row mt-10 max-w-100 md:max-w-full">
+            <div className="flex flex-col md:flex-row mt-10 max-w-full">
               <form
                 onSubmit={handleSubmit}
-                className="border border-gray-200 p-2 min-w-100"
+                className="border border-gray-200 p-2 min-w-100 rounded"
               >
                 <p className="text-sm">
                   See your impact! Enter how long you have been vegan.
@@ -164,7 +201,7 @@ const Home = () => {
                 </div>
               </form>
               {showStats && (
-                <div className="w-full border border-gray-200 p-2 border-t-0 md:border-t md:border-l-0 md:mt-0">
+                <div className="w-full border border-gray-200 p-2 border-t-0 md:border-t md:border-l-0 md:mt-0 rounded">
                   <div className="flex flex-col text-center">
                     <strong>YOU HAVE SAVED:</strong>
                     <div className="flex ml-2 mt-2 items-center justify-between">
