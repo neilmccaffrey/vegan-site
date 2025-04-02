@@ -95,67 +95,76 @@ const Home = () => {
                 </Link>
               </div>
             </div>
-            <p className="text-4xl md:text-6xl text-center">
-              🌱 Being Vegan 🌱
-            </p>
-            <strong className="mt-10 text-xl">🐷 Saving Animal Lives!</strong>
-            <p className="ml-3">
-              • The average vegan saves{' '}
-              <strong>30 animal lives per month</strong> (~365 per year).
-            </p>
-            <p className="ml-3">
-              • This includes animals like chickens, pigs, cows, and fish—along
-              with many others—that would otherwise be killed for food.
-            </p>
-            <strong className="mt-5 text-xl">💧 Water Conservation!</strong>
-            <p className="ml-3">
-              • A vegan diet saves{' '}
-              <strong>219,000 gallons of water per year</strong> (~600 gallons
-              per day).
-            </p>
-            <p className="ml-3">
-              • Producing 1 pound of beef requires{' '}
-              <strong>1,800 gallons of water</strong>, while producing 1 pound
-              of tofu takes only <strong>302 gallons.</strong>
-            </p>
-            <strong className="mt-5 text-xl">
-              🌳 Reducing Land Use & Deforestation!
-            </strong>
-            <p className="ml-3">
-              • Animal agriculture uses <strong>77% of global farmland</strong>{' '}
-              but provides only
-              <strong> {`18% of the world's calories.`}</strong>
-            </p>
-            <p className="ml-3">
-              • Every day, a vegan saves <strong>30 sq ft of forest</strong>{' '}
-              from destruction for livestock grazing and feed crops.
-            </p>
-            <strong className="mt-5 text-xl">
-              🌍 Reducing Carbon Footprint!
-            </strong>
-            <p className="ml-3">
-              • A vegan diet reduces carbon emissions by{' '}
-              <strong>50% compared to a meat-heavy diet.</strong>
-            </p>
-            <p className="ml-3">
-              • If the world went vegan, it could cut food-related greenhouse
-              gas emissions by <strong>up to 70%.</strong>
-            </p>
-            <strong className="mt-5 text-xl">❤️ Health Benefits!</strong>
-            <p className="ml-3">
-              • Studies show that a vegan diet can lower the risk of{' '}
-              <strong>heart disease by 32%</strong> and reduce the risk of
-              certain cancers.
-            </p>
-            <p className="ml-3">
-              • Vegans tend to have{' '}
-              <strong>lower cholesterol and blood pressure </strong>
-              compared to meat-eaters.
-            </p>
+            <div className="border border-gray-200 shadow-lg rounded-2xl p-6">
+              <p className="text-4xl md:text-6xl text-center">
+                🌱 Being Vegan 🌱
+              </p>
+              <strong className="block mt-10 text-xl">
+                🐷 Saving Animal Lives!
+              </strong>
+              <p className="ml-3">
+                • The average vegan saves{' '}
+                <strong>30 animal lives per month</strong> (~365 per year).
+              </p>
+              <p className="ml-3">
+                • This includes animals like chickens, pigs, cows, and
+                fish—along with many others—that would otherwise be killed for
+                food.
+              </p>
+              <strong className="block mt-5 text-xl">
+                💧 Water Conservation!
+              </strong>
+              <p className="ml-3">
+                • A vegan diet saves{' '}
+                <strong>219,000 gallons of water per year</strong> (~600 gallons
+                per day).
+              </p>
+              <p className="ml-3">
+                • Producing 1 pound of beef requires{' '}
+                <strong>1,800 gallons of water</strong>, while producing 1 pound
+                of tofu takes only <strong>302 gallons.</strong>
+              </p>
+              <strong className="block mt-5 text-xl">
+                🌳 Reducing Land Use & Deforestation!
+              </strong>
+              <p className="ml-3">
+                • Animal agriculture uses{' '}
+                <strong>77% of global farmland</strong> but provides only
+                <strong> {`18% of the world's calories.`}</strong>
+              </p>
+              <p className="ml-3">
+                • Every day, a vegan saves <strong>30 sq ft of forest</strong>{' '}
+                from destruction for livestock grazing and feed crops.
+              </p>
+              <strong className="block mt-5 text-xl">
+                🌍 Reducing Carbon Footprint!
+              </strong>
+              <p className="ml-3">
+                • A vegan diet reduces carbon emissions by{' '}
+                <strong>50% compared to a meat-heavy diet.</strong>
+              </p>
+              <p className="ml-3">
+                • If the world went vegan, it could cut food-related greenhouse
+                gas emissions by <strong>up to 70%.</strong>
+              </p>
+              <strong className="block mt-5 text-xl">
+                ❤️ Health Benefits!
+              </strong>
+              <p className="ml-3">
+                • Studies show that a vegan diet can lower the risk of{' '}
+                <strong>heart disease by 32%</strong> and reduce the risk of
+                certain cancers.
+              </p>
+              <p className="ml-3">
+                • Vegans tend to have{' '}
+                <strong>lower cholesterol and blood pressure </strong>
+                compared to meat-eaters.
+              </p>
+            </div>
             <div className="flex flex-col md:flex-row mt-10 max-w-full">
               <form
                 onSubmit={handleSubmit}
-                className="border border-gray-200 p-2 min-w-100 rounded"
+                className="border border-gray-200 p-4 min-w-100 md:shadow-lg rounded"
               >
                 <p className="text-sm">
                   See your impact! Enter how long you have been vegan.
@@ -201,7 +210,7 @@ const Home = () => {
                 </div>
               </form>
               {showStats && (
-                <div className="w-full border border-gray-200 p-2 border-t-0 md:border-t md:border-l-0 md:mt-0 rounded">
+                <div className="w-full border border-gray-200 p-2 border-t-0 md:border-t md:ml-2 md:mt-0 shadow-lg rounded">
                   <div className="flex flex-col text-center">
                     <strong>YOU HAVE SAVED:</strong>
                     <div className="flex ml-2 mt-2 items-center justify-between">

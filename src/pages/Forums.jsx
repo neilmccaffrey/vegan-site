@@ -35,8 +35,8 @@ const Forums = () => {
       {/* <link rel="canonical" href="https://yourdomain.com/forums" /> */}
 
       <h1 className="flex mt-20 items-center justify-center">Forums</h1>
-      <div className="flex flex-col mt-5 items-center border rounded shadow-lg max-w-150 mx-auto justify-center modal">
-        <div className="flex w-full border-b justify-between">
+      <div className="flex flex-col mt-5 items-center border border-gray-200 rounded shadow-lg max-w-150 mx-auto justify-center modal">
+        <div className="flex w-full border-b border-gray-200 justify-between">
           <span className="flex-1 py-2 ml-5">Topics</span>
           <span className="border-l border-gray-300 px-2 py-2 flex w-16">
             Posts
@@ -44,7 +44,10 @@ const Forums = () => {
         </div>
         <ul className="w-full">
           {topics.map((topic, index) => (
-            <li key={index} className="flex w-full border-b last:border-b-0">
+            <li
+              key={index}
+              className="flex w-full border-b border-gray-200 last:border-b-0"
+            >
               <Link
                 to={`/forums/${topic.name.toLowerCase()}`}
                 className="flex-1 py-2 ml-5 underline text-blue-300 text-lg"
