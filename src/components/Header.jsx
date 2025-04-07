@@ -8,11 +8,17 @@ const Header = () => {
   const { user, isAuthenticated, manualLogout } = useContext(UserContext);
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
+  const mobileMenuRef = useRef(null);
 
   // Close menu on click outside
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target) &&
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(e.target)
+      ) {
         setShowMenu(false);
       }
     };
@@ -54,7 +60,10 @@ const Header = () => {
               {showMenu && (
                 <div className="absolute right-0 mt-2 shadow-lg bg-gray-300 rounded p-2">
                   <button
-                    onClick={manualLogout}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      manualLogout();
+                    }}
                     className="block w-full text-left px-4 py-2 hover:bg-gray-200 whitespace-nowrap hover:underline cursor-pointer"
                   >
                     Sign Out
@@ -75,7 +84,7 @@ const Header = () => {
 
         {showMenu && (
           <div
-            ref={menuRef}
+            ref={mobileMenuRef}
             className="absolute top-14 left-0 w-full bg-white shadow-lg p-4 flex flex-col items-start md:hidden modal"
           >
             <Link
