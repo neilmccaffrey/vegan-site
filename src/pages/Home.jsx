@@ -96,7 +96,7 @@ const Home = () => {
               </div>
             </div>
             <div className="border border-gray-200 shadow-lg rounded-2xl p-6">
-              <p className="text-4xl md:text-6xl text-center">
+              <p className="text-4xl md:text-6xl p-2 text-center font-semibold bg-gradient-to-r from-green-600 to-lime-400 text-transparent bg-clip-text">
                 🌱 Being Vegan 🌱
               </p>
               <strong className="block mt-10 text-xl">

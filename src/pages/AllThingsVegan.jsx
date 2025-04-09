@@ -28,7 +28,7 @@ const AllThingsVegan = () => {
 
       <div className="flex mx-auto items-center justify-center">
         <div className="flex flex-col mt-20 md:ml-5 w-screen md:max-w-125">
-          <div className="self-center">
+          <div className="self-center font-semibold pb-2 border-b border-gray-300 text-2xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-green-600 to-lime-400 text-transparent bg-clip-text">
             <span>Vegan Resources</span>
           </div>
           <ul>
