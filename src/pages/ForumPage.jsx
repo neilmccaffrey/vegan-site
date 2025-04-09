@@ -115,14 +115,18 @@ const ForumPage = () => {
 
   return (
     <div className="flex flex-col mt-20 items-center">
-      <h1>{topic.charAt(0).toUpperCase() + topic.slice(1)} Forum</h1>
-      <div className="flex flex-col items-end">
+      <h1 className="font-semibold pb-2 border-b border-gray-300 text-2xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-green-600 to-lime-400 text-transparent bg-clip-text">
+        {topic.charAt(0).toUpperCase() + topic.slice(1)} Forum
+      </h1>
+      <div className="flex flex-col items-end text-green-600">
         <button
           onClick={handleClick}
           className="inline-flex cursor-pointer justify-end items-center gap-x-2 mb-2 mr-2 w-auto"
         >
           <FontAwesomeIcon icon={faPenToSquare} className="fa-2x" />
-          <span>New Post</span>
+          <span className="bg-gradient-to-r from-green-600 to-lime-400 text-transparent bg-clip-text">
+            New Post
+          </span>
         </button>
         {showTextArea && (
           <div className="flex flex-col items-end">
