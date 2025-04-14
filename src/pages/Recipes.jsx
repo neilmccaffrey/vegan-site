@@ -90,12 +90,12 @@ const Recipes = () => {
             <option value="Mexican">Mexican</option>
             {/* Add more categories here */}
           </select>
-          <ul className="mt-5">
+          <ul className="mt-5 last:mb-10">
             {recipes.map((recipe) => (
               <li
                 key={recipe.id}
                 onClick={() => handleRecipeClick(recipe)}
-                className="cursor-pointer underline hover:"
+                className="cursor-pointer underline hover:scale-125 hover:ml-9"
               >
                 {recipe.name}
               </li>
