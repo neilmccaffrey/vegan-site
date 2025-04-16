@@ -68,7 +68,7 @@ const RestaurantsList = ({ loading, setLoading }) => {
               {restaurant.photos?.[0] ? (
                 <img
                   src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${restaurant.photos[0].photo_reference}&key=${import.meta.env.VITE_GOOGLE_API_KEY}`}
-                  alt="Restaurant"
+                  alt="Photo Error"
                   className="w-20 md:w-32 aspect-video object-cover rounded mx-2"
                 />
               ) : (
